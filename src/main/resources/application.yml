@@ -1,0 +1,16 @@
+server:
+  servlet:
+    context-path: /distributionnews
+  port: 80
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/news?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+# 图片上传地址
+imgae-dir:
+  D:/upload
