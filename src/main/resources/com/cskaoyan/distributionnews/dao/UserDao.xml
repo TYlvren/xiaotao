@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cskaoyan.distributionnews.dao.UserDao">
+    <sql id="table">user</sql>
+    <sql id="userColumns">
+    id,username,password,head_url as headUrl
+    </sql>
+
+    <select id="selectUserByUsername" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserByUsernameAndPassword" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        WHERE username=#{username} and password=#{password}
+    </select>
+
+    <insert id="insertUser">
+        insert into
+        <include refid="table"/>
+         (id,username,password,head_url)
+         values (#{id},#{username},#{password},#{headUrl});
+    </insert>
+
+</mapper>

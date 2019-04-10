@@ -2,6 +2,7 @@ server:
   servlet:
     context-path: /distributionnews
   port: 80
+  address: localhost
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
