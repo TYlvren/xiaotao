@@ -27,6 +27,15 @@
         WHERE username=#{username} and password=#{password}
     </select>
 
+    <select id="selectUserById" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        WHERE id =#{id}
+
+    </select>
+
     <insert id="insertUser">
         insert into
         <include refid="table"/>

@@ -51,7 +51,7 @@
                 <li class="top-nav-noti zu-top-nav-li ">
                     <a href="${contextPath}/user/tosendmsg">   发私信 </a>
                 </li>
-                <li class=""><a href="${contextPath}/user/${user.id!}/">${user.name!}</a></li>
+                <li class=""><a href="${contextPath}/user/${user.id!}/">${user.username!}</a></li>
                 <li class=""><a href="${contextPath}/logout/">注销</a></li>
                 <#else>
                 <li class="js-login"><a href="javascript:void(0);">登陆</a></li>

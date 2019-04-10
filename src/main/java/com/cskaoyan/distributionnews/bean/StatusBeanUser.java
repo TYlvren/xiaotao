@@ -1,21 +1,11 @@
-package com.cskaoyan.distributionnews.util;
+package com.cskaoyan.distributionnews.bean;
 
-public class StatusBean {
+public class StatusBeanUser {
     private int code;
     private String msgname;
 
-    public StatusBean() {
+    public StatusBeanUser() {
     }
-
-    public StatusBean(int code) {
-        this.code = code;
-        if(code == 1 ){
-            msgname = "用户名已经被注册";
-        }else if(code == 2){
-            msgname = "注册成功";
-        }
-    }
-
 
     public int getCode() {
         return code;

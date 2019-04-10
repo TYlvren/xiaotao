@@ -7,60 +7,60 @@
             <div class="daily">
 
            <#assign  cur_date =''/>
-           <#list vos as vo >
-            <#if cur_date != vo.news.createdDate?string("yyyy-MM-dd")>
-                 <#if vo_index gt 0 >
+           <#list news as new >
+            <#if cur_date != new.createdDate?string("yyyy-MM-dd")>
+                 <#if new_index gt 0 >
                       </div> <#--   上一个要收尾 -->
                  </#if>
-                <#assign  cur_date =vo.news.createdDate?string("yyyy-MM-dd")/>
+                <#assign  cur_date =new.createdDate?string("yyyy-MM-dd")/>
             <h3 class="date">
                 <i class="fa icon-calendar"></i>
-                <span>美食资讯 &nbsp; ${vo.news.createdDate?string("yyyy-MM-dd")}</span>
+                <span>美食资讯 &nbsp; ${new.createdDate?string("yyyy-MM-dd")}</span>
             </h3>
             <div class="posts">
             </#if>
                  <div class="post">
                     <div class="votebar">
-                        <#if  vo.like gt 0 >
-                        <button class="click-like up pressed" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!}</span></button>
+                        <#if  new.likeCount gt 0 >
+                        <button class="click-like up pressed" data-id="${new.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${new.likeCount!}</span></button>
                         <#else>
-                        <button class="click-like up" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!}</span></button>
+                        <button class="click-like up" data-id="${new.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${new.likeCount!}</span></button>
                         </#if>
-                        <#if vo.like < 0>
-                        <button class="click-dislike down pressed" data-id="${vo.news.id!}" title="反对"><i class="vote-arrow"></i></button>
+                        <#if new.likeCount < 0>
+                        <button class="click-dislike down pressed" data-id="${new.id!}" title="反对"><i class="vote-arrow"></i></button>
                         <#else>
-                        <button class="click-dislike down" data-id="${vo.news.id!}" title="反对"><i class="vote-arrow"></i></button>
+                        <button class="click-dislike down" data-id="${new.id!}" title="反对"><i class="vote-arrow"></i></button>
                         </#if>
                     </div>
                     <div class="content">
                         <div >
-                            <img class="content-img" src="${vo.news.image!}" alt="">
+                            <img class="content-img" src="${new.image!}" alt="">
                         </div>
                         <div class="content-main">
                             <h3 class="title">
-                                <a target="_blank" rel="external nofollow" href="${contextPath}/news/${vo.news.id!}">${vo.news.title!}</a>
+                                <a target="_blank" rel="external nofollow" href="${contextPath}/news/${new.id!}">${new.title!}</a>
                             </h3>
                             <div class="meta">
-                                ${vo.news.link!}
+                                ${new.link!}
                                 <span>
-                                            <i class="fa icon-comment"></i> ${vo.news.commentCount!}
+                                            <i class="fa icon-comment"></i> ${new.commentCount!}
                                         </span>
                             </div>
                         </div>
                     </div>
                     <div class="user-info">
                         <div class="user-avatar">
-                            <a href="${contextPath!}/user/$!{vo.user.id}/"><img width="32" class="img-circle" src="${vo.user.headUrl}"></a>
+                            <a href="${contextPath!}/user/$!{new.user.id}/"><img width="32" class="img-circle" src="${contextPath}/${new.user.headUrl}"></a>
                         </div>
 
 
                     </div>
 
-                    <div class="subject-name">来自 <a href="${contextPath!}/user/${vo.user.id}/">${vo.user.name}</a></div>
+                    <div class="subject-name">来自 <a href="${contextPath!}/user/${new.user.id}/">${new.user.username}</a></div>
                 </div>
 
 
-              <#if vo_index == vos?size >
+              <#if new_index == news?size >
                  </div>  <#--最后有个元素要收尾 -->
               </#if>
 

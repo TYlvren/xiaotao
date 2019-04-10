@@ -3,7 +3,7 @@ package com.cskaoyan.distributionnews;
 import com.cskaoyan.distributionnews.dao.UserDao;
 import com.cskaoyan.distributionnews.model.User;
 import com.cskaoyan.distributionnews.service.NewsService;
-import com.cskaoyan.distributionnews.util.StatusBean;
+import com.cskaoyan.distributionnews.bean.StatusBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -29,13 +29,6 @@ public class DistributionnewsApplicationTests {
         User user = new User(1,"admin","admin",null);
         int i = userDao.insertUser(user);
         logger.info("i=" + i);
-    }
-
-
-    @Test
-    public void testLogin(){
-        User user = new User(1,"admin","admin",null);
-        StatusBean statusBean = newsService.loginUser(user,null);
     }
 
 }

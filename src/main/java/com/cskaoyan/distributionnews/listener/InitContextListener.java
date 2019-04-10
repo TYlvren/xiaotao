@@ -14,4 +14,9 @@ public class InitContextListener implements ServletContextListener {
         String path = servletContext.getContextPath();
         servletContext.setAttribute("contextPath",path);
     }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
 }

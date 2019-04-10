@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /distributionnews
+    context-path: /
   port: 80
   address: localhost
 spring:
@@ -9,9 +9,13 @@ spring:
     url: jdbc:mysql://localhost:3306/news?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
+  servlet:
+    multipart:
+      max-file-size: 5Mb
 mybatis:
   config-location: classpath:mybatis-config.xml
-
 # 图片上传地址
-imgae-dir:
-  D:/upload
+image-dir:
+  D:/upload/
+
+debug: false

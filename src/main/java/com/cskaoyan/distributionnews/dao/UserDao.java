@@ -22,8 +22,18 @@ public interface UserDao {
     User selectUserByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
 
     /**
+     * 通过id查询User
+     * @param id
+     * @return
+     */
+    User selectUserById(int id);
+
+
+    /**
      * 向数据库插入用户
      * @param user
      */
     int insertUser(User user);
+
+
 }
