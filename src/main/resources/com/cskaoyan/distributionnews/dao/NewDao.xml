@@ -6,7 +6,7 @@
     <sql id="selectFields">id,title, link, image, like_count, comment_count,created_date,user_id
     </sql>
     
-    <select id="selectByUserIdAndOffset" resultType="new">
+    <select id="selectUserById" resultType="new">
         SELECT
         <include refid="selectFields"/>
         FROM

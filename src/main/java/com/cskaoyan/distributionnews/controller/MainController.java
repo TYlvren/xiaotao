@@ -3,7 +3,8 @@ package com.cskaoyan.distributionnews.controller;
 import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
-import com.cskaoyan.distributionnews.service.NewsService;
+import com.cskaoyan.distributionnews.service.NewService;
+import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,10 @@ import java.util.List;
 @Controller
 public class MainController {
     @Autowired
-    private NewsService newsService;
+    private NewService newsService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 访问首页
@@ -38,7 +42,7 @@ public class MainController {
     @RequestMapping("reg")
     @ResponseBody
     public StatusBeanUser register(User user){
-        return newsService.registerUser(user);
+        return userService.registerUser(user);
 
     }
 
@@ -51,7 +55,7 @@ public class MainController {
     @RequestMapping("login")
     @ResponseBody
     public StatusBeanUser login(User user, HttpSession session){
-        return newsService.loginUser(user,session);
+        return userService.loginUser(user,session);
     }
 
     /**

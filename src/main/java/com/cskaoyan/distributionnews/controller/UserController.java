@@ -4,7 +4,8 @@ import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.model.Message;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
-import com.cskaoyan.distributionnews.service.NewsService;
+import com.cskaoyan.distributionnews.service.NewService;
+import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,10 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private NewsService newsService;
+    private UserService userService;
+
+    @Autowired
+    private NewService newService;
 
     /**
      * 跳转到发私信页面
@@ -63,6 +67,6 @@ public class UserController {
     public StatusBean addNews(New news, HttpSession session){
         User user = (User)session.getAttribute("user");
         news.setUser(user);
-        return newsService.addNews(news);
+        return newService.addNews(news);
     }
 }
