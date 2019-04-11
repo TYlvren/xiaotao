@@ -1,17 +1,22 @@
 package com.cskaoyan.distributionnews.controller;
 
+import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
 import com.cskaoyan.distributionnews.service.NewService;
+import com.cskaoyan.distributionnews.service.UploadService;
 import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -21,6 +26,10 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+
+
+    @Autowired
+    private UploadService uploadService;
 
     /**
      * 访问首页
@@ -68,6 +77,18 @@ public class MainController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    /**
+     * 上传news图片到阿里云
+     *
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "uploadImage", method = RequestMethod.POST)
+    @ResponseBody
+    public StatusBean upaloadAliyun(MultipartFile file) throws IOException {
+        return uploadService.uploadFileToAliyun(file);
     }
 
 }

@@ -58,7 +58,7 @@ public class UserController {
 
 
     /**
-     * 添加news
+     * 用户添加news
      * @param news
      * @return
      */

@@ -8,4 +8,8 @@ public interface NewDao {
     int insertNews(New news);
 
     List<New> selectAllNew();
+
+    New selectNewById(int id);
+
+    int updateCommentCountById(int newsId);
 }

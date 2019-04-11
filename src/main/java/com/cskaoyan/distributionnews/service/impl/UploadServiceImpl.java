@@ -62,7 +62,8 @@ public class UploadServiceImpl implements UploadService {
         // 关闭OSSClient。
         ossClient.shutdown();
 
-        String msg = "https://" + bucketName + ".oss-cn-hangzhou.aliyuncs.com/" + newFilename;
+        //以缩略图的形式显示
+        String msg = "https://" + bucketName + ".oss-cn-hangzhou.aliyuncs.com/" + newFilename + "?x-oss-process=image/resize,w_120,h_100";
         statusBean.setMsg(msg);
         statusBean.setCode(0);
         return statusBean;

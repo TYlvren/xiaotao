@@ -15,3 +15,11 @@ spring:
 mybatis:
   config-location: classpath:mybatis-config.xml
 debug: false
+
+# 打印SQL日志
+logging:
+  level:
+    com:
+      cskaoyan:
+        distributionnews:
+          dao: debug

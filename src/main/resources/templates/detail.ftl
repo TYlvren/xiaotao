@@ -4,12 +4,12 @@
         <div class="post detail">
 
             <div class="votebar">
-                <#if like gt 0>
+                <#if news.likeCount gt 0>
                 <button class="click-like up pressed" data-id="${news.id}" title="赞同"><i class="vote-arrow"></i><span class="count">${news.likeCount!}</span></button>
                 <#else>
                 <button class="click-like up" data-id="${news.id}" title="赞同"><i class="vote-arrow"></i><span class="count">${news.likeCount!}</span></button>
                 </#if>
-                <#if like gt 0>
+                <#if news.likeCount gt 0>
                 <button class="click-dislike down pressed" data-id="${news.id}" title="反对"><i class="vote-arrow"></i></button>
                 <#else>
                 <button class="click-dislike down" data-id="${news.id}" title="反对"><i class="vote-arrow"></i></button>
@@ -34,7 +34,7 @@
             </div>
             <div class="user-info">
                 <div class="user-avatar">
-                    <a href="${contextPath}/user/${owner.id!}"><img width="32" class="img-circle" src="${owner.headUrl!}"></a>
+                    <a href="${contextPath}/user/${news.user.id!}"><img width="32" class="img-circle" src="${contextPath}/${news.user.headUrl!}"></a>
                 </div>
                 <!--
                 <div class="info">
@@ -48,7 +48,7 @@
                 -->
             </div>
 
-            <div class="subject-name">来自 <a href="${contextPath}/user/${owner.id}">${owner.name!}</a></div>
+            <div class="subject-name">来自 <a href="${contextPath}/user/${news.user.id}">${news.user.username!}</a></div>
         </div>
 
 
@@ -75,17 +75,17 @@
         </div>
 
         <div id="comments" class="comments">
-            <#list  comments as commentvo >
+            <#list  comments as comment >
             <div class="media">
-                <a class="media-left" href="${contextPath}/user/${commentvo.user.id!}">
-                    <img src="${commentvo.user.headUrl!}">
+                <a class="media-left" href="${contextPath}/user/${comment.user.id!}">
+                    <img src="${contextPath}/${comment.user.headUrl!}">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <small class="date">${commentvo.comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}
+                        <small class="date">${comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}
                         </small>
                     </h4>
-                    <div>${commentvo.comment.content!}</div>
+                    <div>${comment.content!}</div>
                 </div>
             </div>
             </#list>

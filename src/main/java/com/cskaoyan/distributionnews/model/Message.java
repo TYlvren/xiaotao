@@ -1,7 +1,10 @@
 package com.cskaoyan.distributionnews.model;
 
-public class Message {
+import java.util.Date;
 
+public class Message {
+    private User user = new User();
+    private Date createdDate = new Date(System.currentTimeMillis());
     private String fromName;
     private String toName;
     private String content;

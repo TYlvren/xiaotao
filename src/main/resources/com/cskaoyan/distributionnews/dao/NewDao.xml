@@ -36,10 +36,24 @@
       from <include refid="table"/>
     </select>
 
+    <select id="selectNewById" resultMap="newMap">
+        select
+        id,title, link, image, like_count, comment_count,created_date,user_id
+        from <include refid="table"/>
+        where id =#{id}
+    </select>
+
     <insert id="insertNews" >
         insert into
         <include refid="table"/>
         (id,title, link, image,created_date,user_id)
         value(#{id},#{title},#{link},#{image},now(),#{user.id})
     </insert>
+
+    <update id="updateCommentCountById">
+        update
+        <include refid="table"/>
+        set comment_count = comment_count + 1
+        where id=#{id}
+    </update>
 </mapper>
