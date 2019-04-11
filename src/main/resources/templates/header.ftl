@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a href="${contextPath}" class="navbar-brand logo">
+            <a href="${contextPath}/" class="navbar-brand logo">
                 <h1>美食资讯</h1>
                 <h3>有好吃的才是王道</h3>
             </a>

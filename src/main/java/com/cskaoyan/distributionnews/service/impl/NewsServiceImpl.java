@@ -112,4 +112,15 @@ public class NewsServiceImpl implements NewsService {
     public List<New> findNew() {
         return newsDao.selectAllNew();
     }
+
+    /**
+     * 通过id查找User
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public User findUser(int id) {
+        return userDao.selectUserById(id);
+    }
 }

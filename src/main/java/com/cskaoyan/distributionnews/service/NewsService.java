@@ -35,4 +35,11 @@ public interface NewsService {
      * @return
      */
     List<New> findNew();
+
+    /**
+     * 通过id查找User
+     * @param id
+     * @return
+     */
+    User findUser(int id);
 }
