@@ -4,6 +4,7 @@ import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -42,4 +43,11 @@ public interface NewsService {
      * @return
      */
     User findUser(int id);
+
+    /**
+     * 上传图片到阿里云OSS
+     * @param file
+     * @return
+     */
+    StatusBean uploadFileToAliyun(MultipartFile file);
 }

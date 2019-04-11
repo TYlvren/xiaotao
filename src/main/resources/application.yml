@@ -14,8 +14,4 @@ spring:
       max-file-size: 5Mb
 mybatis:
   config-location: classpath:mybatis-config.xml
-# 图片上传地址
-image-dir:
-  D:/upload/
-
 debug: false
