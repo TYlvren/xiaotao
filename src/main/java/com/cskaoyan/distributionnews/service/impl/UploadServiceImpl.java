@@ -3,6 +3,7 @@ package com.cskaoyan.distributionnews.service.impl;
 import com.aliyun.oss.OSSClient;
 import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.service.UploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +14,9 @@ import java.util.UUID;
 
 @Service
 public class UploadServiceImpl implements UploadService {
+
+    @Autowired
+    private StatusBean statusBean;
 
     /**
      * 上传图片到阿里云OSS
@@ -49,7 +53,6 @@ public class UploadServiceImpl implements UploadService {
         //OSS中文件夹的概念仅是一个逻辑概念，定义object的key为abc/1.jpg就会在该bucket下创建一个abc的文件夹
         String bucketName = "distributionnews";
 
-        StatusBean statusBean = new StatusBean();
         try {
             ossClient.putObject(bucketName, newFilename, file.getInputStream());
         } catch (IOException e) {

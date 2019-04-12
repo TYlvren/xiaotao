@@ -1,9 +1,11 @@
 package com.cskaoyan.distributionnews.controller;
 
 import com.cskaoyan.distributionnews.bean.StatusBean;
+import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.model.Message;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
+import com.cskaoyan.distributionnews.service.MessageService;
 import com.cskaoyan.distributionnews.service.NewService;
 import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class UserController {
     @Autowired
     private NewService newService;
 
+    @Autowired
+    private MessageService messageService;
+
     /**
      * 跳转到发私信页面
      * @return
@@ -41,10 +46,11 @@ public class UserController {
      */
     @RequestMapping("msg/addMessage")
     @ResponseBody
-    public StatusBean addMessage(Message message){
-        return new StatusBean();
+    public StatusBean addMessage(Message message,HttpSession session){
+        User user = (User)session.getAttribute("user");
+        message.setFromName(user.getUsername());
+        return messageService.addMessage(message);
     }
-
 
     /**
      * 查看个人信息

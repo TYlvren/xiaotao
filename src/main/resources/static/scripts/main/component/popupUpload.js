@@ -37,7 +37,7 @@ var oPopupUpload = new PopupUpload({
                 var oUploadBtn = oEl.find('a.js-upload-btn');
                 new Upload({
                     targetEl: oUploadBtn,
-                    url: 'uploadImage/',
+                    url: '/uploadImage/',
                     check: function (oFile, sType, nFileSize) {
                         var sMsg = nFileSize === 0 ? '文件大小不能为0' : /image/gi.test(sType || '') ? '' : '文件格式不正确';
                         sMsg && alert(sMsg);

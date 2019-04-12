@@ -7,6 +7,11 @@ public class StatusBeanUser {
     public StatusBeanUser() {
     }
 
+    public StatusBeanUser(int code, String msgname) {
+        this.code = code;
+        this.msgname = msgname;
+    }
+
     public int getCode() {
         return code;
     }

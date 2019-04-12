@@ -44,6 +44,13 @@
             <version>8.0.11</version>
         </dependency>
 
+        <!--Redis数据库-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
         <!--freemarker-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

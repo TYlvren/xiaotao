@@ -14,6 +14,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private StatusBeanUser statusBeanUser;
+
     /**
      * 注册用户
      *
@@ -23,24 +26,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusBeanUser registerUser(User user) {
         User userByUsername = userDao.selectUserByUsername(user.getUsername());
-        StatusBeanUser statusBean = new StatusBeanUser();
+
         if(userByUsername != null){
-            statusBean.setCode(1);
-            statusBean.setMsgname("用户名已被注册");
-            return statusBean;
+            statusBeanUser.setCode(1);
+            statusBeanUser.setMsgname("用户名已被注册");
+            return statusBeanUser;
         }
         int random = (int) (Math.random() * 10 + 1);
         user.setHeadUrl("images/headImg/"+ random +".jpg");
         int i = userDao.insertUser(user);
         if(i != 1){
-            statusBean.setCode(2);
-            statusBean.setMsgname("注册异常");
-            return statusBean;
+            statusBeanUser.setCode(2);
+            statusBeanUser.setMsgname("注册异常");
+            return statusBeanUser;
         }
 
-        statusBean.setCode(0);
-        statusBean.setMsgname("注册成功");
-        return statusBean;
+        statusBeanUser.setCode(0);
+        statusBeanUser.setMsgname("注册成功");
+        return statusBeanUser;
     }
 
 
@@ -53,24 +56,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusBeanUser loginUser(User user, HttpSession session) {
         User userByUsername = userDao.selectUserByUsername(user.getUsername());
-        StatusBeanUser statusBean = new StatusBeanUser();
         if(userByUsername == null){
-            statusBean.setCode(1);
-            statusBean.setMsgname("用户名不存在");
-            return statusBean;
+            statusBeanUser.setCode(1);
+            statusBeanUser.setMsgname("用户名不存在");
+            return statusBeanUser;
         }
 
         User userByUsernameAndPassword = userDao.selectUserByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (userByUsernameAndPassword == null){
-            statusBean.setCode(2);
-            statusBean.setMsgname("密码错误");
-            return statusBean;
+            statusBeanUser.setCode(2);
+            statusBeanUser.setMsgname("密码错误");
+            return statusBeanUser;
         }
 
         session.setAttribute("user",userByUsernameAndPassword);
-        statusBean.setCode(0);
-        statusBean.setMsgname("登录成功");
-        return statusBean;
+        statusBeanUser.setCode(0);
+        statusBeanUser.setMsgname("登录成功");
+        return statusBeanUser;
 
     }
 

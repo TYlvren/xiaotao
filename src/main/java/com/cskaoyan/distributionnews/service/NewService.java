@@ -41,4 +41,24 @@ public interface NewService {
      * @return
      */
     List<Comment> findComment(int id);
+
+    /**
+     * 增加新闻点赞数
+     * @param newsId
+     * @param userId
+     * @return
+     */
+    int increaseLikeCount(int newsId, int userId) throws Exception;
+
+
+    /**
+     * 减少新闻点赞数
+     *
+     * @param newsId
+     * @param userId
+     * @return
+     */
+    int decreaseLikeCount(int newsId, int userId) throws Exception;
+
+    int findLikeCount(int newsId);
 }

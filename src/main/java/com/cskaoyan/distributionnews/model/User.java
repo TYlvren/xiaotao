@@ -1,9 +1,13 @@
 package com.cskaoyan.distributionnews.model;
 
+import javax.validation.constraints.Size;
+
 public class User {
 
     private int id;
+    @Size(max = 20,message = "用户名长度最大不能超过20")
     private String username;
+    @Size(min = 6,max = 16,message = "密码长度应为6-16")
     private String password;
     private String headUrl;
 

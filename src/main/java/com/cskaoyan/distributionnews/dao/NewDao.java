@@ -12,4 +12,10 @@ public interface NewDao {
     New selectNewById(int id);
 
     int updateCommentCountById(int newsId);
+
+    int increaseLikeCountById(int newsId);
+
+    int decreaseLikeCountById(int newsId);
+
+    int selectLikeCountById(int newsId);
 }

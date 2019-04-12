@@ -7,6 +7,11 @@ public class StatusBean {
     public StatusBean() {
     }
 
+    public StatusBean(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public int getCode() {
         return code;
     }
@@ -21,5 +26,13 @@ public class StatusBean {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "StatusBean{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }

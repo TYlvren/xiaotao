@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
 
     private final String[] ignoreUrl = new String[]{"/fonts","/login","/image","/images","/scripts",
-            "/styles","/error","/reg","logout","/news/"};
+            "/styles","/error","/reg","logout","/news/","like","dislike"};
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

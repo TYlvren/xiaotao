@@ -43,6 +43,13 @@
         where id =#{id}
     </select>
 
+    <select id="selectLikeCountById" resultType="_int">
+        select
+        like_count
+        from <include refid="table"/>
+        where id =#{id}
+    </select>
+
     <insert id="insertNews" >
         insert into
         <include refid="table"/>
@@ -54,6 +61,20 @@
         update
         <include refid="table"/>
         set comment_count = comment_count + 1
+        where id=#{id}
+    </update>
+
+    <update id="increaseLikeCountById">
+        update
+        <include refid="table"/>
+        set like_count = like_count + 1
+        where id=#{id}
+    </update>
+
+    <update id="decreaseLikeCountById">
+        update
+        <include refid="table"/>
+        set like_count = like_count - 1
         where id=#{id}
     </update>
 </mapper>

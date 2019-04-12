@@ -3,11 +3,27 @@ package com.cskaoyan.distributionnews.model;
 import java.util.Date;
 
 public class Message {
-    private User user = new User();
-    private Date createdDate = new Date(System.currentTimeMillis());
+    private int id;
+    private Date createdDate;
     private String fromName;
     private String toName;
     private String content;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public String getFromName() {
         return fromName;

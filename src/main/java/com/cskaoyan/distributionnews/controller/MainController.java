@@ -10,12 +10,17 @@ import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -63,7 +68,16 @@ public class MainController {
      */
     @RequestMapping("login")
     @ResponseBody
-    public StatusBeanUser login(User user, HttpSession session){
+    public StatusBeanUser login(@Valid User user, int rember, BindingResult bindingResult,
+                                HttpSession session, HttpServletResponse response){
+        if(rember == 1) {
+            response.addCookie(new Cookie("rember",user.getPassword()));
+        }
+        if(bindingResult.hasErrors()){
+            FieldError fieldError = bindingResult.getFieldError();
+            assert fieldError != null;
+            return new StatusBeanUser(3,fieldError.getDefaultMessage());
+        }
         return userService.loginUser(user,session);
     }
 
