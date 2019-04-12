@@ -12,6 +12,7 @@ public class New {
     private Date createdDate;
     private User user;
 
+    private int like;
     public int getId() {
         return id;
     }
@@ -74,5 +75,13 @@ public class New {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }

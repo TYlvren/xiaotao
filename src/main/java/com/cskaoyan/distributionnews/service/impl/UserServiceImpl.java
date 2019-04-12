@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public StatusBeanUser registerUser(User user) {
+    public StatusBeanUser registerUser(User user, HttpSession session) {
         User userByUsername = userDao.selectUserByUsername(user.getUsername());
 
         if(userByUsername != null){
@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
         statusBeanUser.setCode(0);
         statusBeanUser.setMsgname("注册成功");
+        session.setAttribute("user",user);
         return statusBeanUser;
     }
 

@@ -37,6 +37,9 @@
     </select>
 
     <insert id="insertUser">
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="_int">
+            select last_insert_id() as id;
+        </selectKey>
         insert into
         <include refid="table"/>
          (id,username,password,head_url)

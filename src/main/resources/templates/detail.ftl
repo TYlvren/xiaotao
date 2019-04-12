@@ -9,7 +9,7 @@
                 <#else>
                 <button class="click-like up" data-id="${news.id}" title="赞同"><i class="vote-arrow"></i><span class="count">${news.likeCount!}</span></button>
                 </#if>
-                <#if news.likeCount gt 0>
+                <#if news.likeCount lt 0>
                 <button class="click-dislike down pressed" data-id="${news.id}" title="反对"><i class="vote-arrow"></i></button>
                 <#else>
                 <button class="click-dislike down" data-id="${news.id}" title="反对"><i class="vote-arrow"></i></button>

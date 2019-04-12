@@ -1,7 +1,6 @@
 package com.cskaoyan.distributionnews.controller;
 
 import com.cskaoyan.distributionnews.bean.StatusBean;
-import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.model.Message;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
@@ -10,11 +9,13 @@ import com.cskaoyan.distributionnews.service.NewService;
 import com.cskaoyan.distributionnews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -58,7 +59,11 @@ public class UserController {
      * @return
      */
     @RequestMapping("{id}")
-    public String userMessage(@PathVariable int id){
+    public String userMessage(@PathVariable int id, Model model){
+        User user = userService.findUser(id);
+        model.addAttribute("user",user);
+        List<New> news = newService.findNewsByUserId(id);
+        model.addAttribute("news", news);
         return "personal";
     }
 

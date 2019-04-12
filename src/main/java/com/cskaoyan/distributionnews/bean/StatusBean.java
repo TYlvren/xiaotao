@@ -28,6 +28,11 @@ public class StatusBean {
         this.msg = msg;
     }
 
+    public void setCodeAndMsg(int code,String msg){
+        this.code = code;
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return "StatusBean{" +

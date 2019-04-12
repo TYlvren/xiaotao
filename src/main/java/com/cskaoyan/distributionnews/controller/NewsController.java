@@ -31,9 +31,8 @@ public class NewsController {
 
     @RequestMapping("news/{id}")
     public String toDetail(@PathVariable int id, Model model) {
-        New news = newService.findNew(id);
+        New news = newService.findNews(id);
         model.addAttribute("news", news);
-
         List<Comment> comments = newService.findComment(id);
         model.addAttribute("comments", comments);
         return "detail";
@@ -61,24 +60,13 @@ public class NewsController {
         User user = (User) session.getAttribute("user");
         statusBean.setCode(0);
 
-        if(user == null){
+        if (user == null) {
             statusBean.setMsg("无效");
             return statusBean;
         }
 
-        int i = 0;
-        try {
-            i = newService.increaseLikeCount(newsId, user.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if(i !=1 ){
-            statusBean.setCode(1);
-            statusBean.setMsg("点赞失败");
-        }
-        int msg = newService.findLikeCount(newsId);
-        statusBean.setMsg(String.valueOf(msg));
-        return statusBean;
+        return newService.increaseLikeCount(newsId, user.getId());
+
     }
 
     /**
@@ -94,30 +82,17 @@ public class NewsController {
         statusBean.setCode(0);
         User user = (User) session.getAttribute("user");
 
-        if(user == null){
+        if (user == null) {
             statusBean.setMsg("无效");
             return statusBean;
         }
 
         int msg = newService.findLikeCount(newsId);
-        if(msg == 0){
+        if (msg == 0) {
             statusBean.setMsg("0");
             return statusBean;
         }
 
-        int i = 0;
-        try {
-            i = newService.decreaseLikeCount(newsId, user.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if(i !=1 ){
-            statusBean.setCode(1);
-            statusBean.setMsg("点踩失败");
-        }
-
-        msg = newService.findLikeCount(newsId);
-        statusBean.setMsg(String.valueOf(msg));
-        return statusBean;
+        return newService.decreaseLikeCount(newsId, user.getId());
     }
 }

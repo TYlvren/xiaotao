@@ -14,7 +14,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    StatusBeanUser registerUser(User user);
+    StatusBeanUser registerUser(User user, HttpSession session);
 
     /**
      * 登录用户

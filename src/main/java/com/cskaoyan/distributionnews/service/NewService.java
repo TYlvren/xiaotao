@@ -20,14 +20,14 @@ public interface NewService {
      * 查找所有的new
      * @return
      */
-    List<New> findNew();
+    List<New> findNews();
 
     /**
      * 通过id查找new
      * @param id
      * @return
      */
-    New findNew(int id);
+    New findNews(int id);
 
     /**
      * 为news添加一条评论
@@ -48,7 +48,7 @@ public interface NewService {
      * @param userId
      * @return
      */
-    int increaseLikeCount(int newsId, int userId) throws Exception;
+    StatusBean increaseLikeCount(int newsId, int userId);
 
 
     /**
@@ -58,7 +58,19 @@ public interface NewService {
      * @param userId
      * @return
      */
-    int decreaseLikeCount(int newsId, int userId) throws Exception;
+    StatusBean decreaseLikeCount(int newsId, int userId);
 
+    /**
+     * 查找新闻点赞数
+     * @param newsId
+     * @return
+     */
     int findLikeCount(int newsId);
+
+    /**
+     * 查找某用户发布过的新闻
+     * @param userId
+     * @return
+     */
+    List<New> findNewsByUserId(int userId);
 }

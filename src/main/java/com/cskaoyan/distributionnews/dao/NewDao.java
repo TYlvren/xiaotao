@@ -18,4 +18,6 @@ public interface NewDao {
     int decreaseLikeCountById(int newsId);
 
     int selectLikeCountById(int newsId);
+
+    List<New> selectNewsByUserId(int userId);
 }

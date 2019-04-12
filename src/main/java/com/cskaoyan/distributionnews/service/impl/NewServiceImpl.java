@@ -53,7 +53,7 @@ public class NewServiceImpl implements NewService {
      * @return
      */
     @Override
-    public List<New> findNew() {
+    public List<New> findNews() {
         return newDao.selectAllNew();
     }
 
@@ -64,7 +64,7 @@ public class NewServiceImpl implements NewService {
      * @return
      */
     @Override
-    public New findNew(int id) {
+    public New findNews(int id) {
         return newDao.selectNewById(id);
     }
 
@@ -99,8 +99,7 @@ public class NewServiceImpl implements NewService {
      * @return
      */
     @Override
-    @Transactional
-    public int increaseLikeCount(int newsId, int userId) throws Exception {
+    public StatusBean increaseLikeCount(int newsId, int userId){
         String userIdString = String.valueOf(userId);
 
         //该新闻点赞set添加此userId，如果已经存在则不进行添加操作
@@ -108,7 +107,8 @@ public class NewServiceImpl implements NewService {
         if(!sismember) {
             Long sadd = jedis.sadd(newsId + "_like", userIdString);
             if (sadd != 1){
-                throw new Exception("向" + newsId + "_like添加元素异常");
+                statusBean.setCodeAndMsg(1,"异常");
+                return statusBean;
             }
         }
 
@@ -117,10 +117,19 @@ public class NewServiceImpl implements NewService {
         if(sismember){
             Long srem = jedis.srem(newsId + "_dislike", userIdString);
             if (srem != 1){
-                throw new Exception("向" + newsId + "_dislike删除元素异常");
+                statusBean.setCodeAndMsg(1,"异常");
+                return statusBean;
             }
         }
-        return newDao.increaseLikeCountById(newsId);
+        int i = newDao.increaseLikeCountById(newsId);
+        int msg = newDao.selectLikeCountById(newsId);
+        if(i==1){
+            statusBean.setCodeAndMsg(0,String.valueOf(msg));
+        }else {
+            statusBean.setCodeAndMsg(1,"异常");
+        }
+
+        return statusBean;
     }
 
 
@@ -132,16 +141,18 @@ public class NewServiceImpl implements NewService {
      * @return
      */
     @Override
-    @Transactional
-    public int decreaseLikeCount(int newsId, int userId) throws Exception {
+    public StatusBean decreaseLikeCount(int newsId, int userId){
         String userIdString = String.valueOf(userId);
+        //如果没有点赞则不能点踩
+        Boolean sismember = jedis.sismember(newsId + "_like", userIdString);
 
         //该新闻点踩set添加此userId，如果已经存在则不进行添加操作
-        Boolean sismember = jedis.sismember(newsId + "_dislike", userIdString);
+
         if(!sismember) {
             Long sadd = jedis.sadd(newsId + "_dislike", userIdString);
             if (sadd != 1){
-                throw new Exception("向" + newsId + "_dislike添加元素异常");
+                statusBean.setCodeAndMsg(1,"异常");
+                return statusBean;
             }
         }
 
@@ -150,15 +161,34 @@ public class NewServiceImpl implements NewService {
         if(sismember){
             Long srem = jedis.srem(newsId + "_like", userIdString);
             if (srem != 1){
-                throw new Exception("向" + newsId + "_like删除元素异常");
+                statusBean.setCodeAndMsg(1,"异常");
+                return statusBean;
             }
         }
-        return newDao.decreaseLikeCountById(newsId);
+        int i = newDao.decreaseLikeCountById(newsId);
+        if(i==1){
+            int msg = newDao.selectLikeCountById(newsId);
+            statusBean.setCodeAndMsg(0,String.valueOf(msg));
+        }else {
+            statusBean.setCodeAndMsg(1,"异常");
+        }
+        return statusBean;
     }
 
 
     @Override
     public int findLikeCount(int newsId) {
         return newDao.selectLikeCountById(newsId);
+    }
+
+    /**
+     * 查找某用户发布过的新闻
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<New> findNewsByUserId(int userId) {
+        return newDao.selectNewsByUserId(userId);
     }
 }

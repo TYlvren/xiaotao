@@ -21,12 +21,12 @@
             </#if>
                  <div class="post">
                     <div class="votebar">
-                        <#if  new.likeCount gt 0 >
+                        <#if  new.like gt 0 >
                         <button class="click-like up pressed" data-id="${new.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${new.likeCount!}</span></button>
                         <#else>
                         <button class="click-like up" data-id="${new.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${new.likeCount!}</span></button>
                         </#if>
-                        <#if new.likeCount < 0>
+                        <#if new.like lt 0>
                         <button class="click-dislike down pressed" data-id="${new.id!}" title="反对"><i class="vote-arrow"></i></button>
                         <#else>
                         <button class="click-dislike down" data-id="${new.id!}" title="反对"><i class="vote-arrow"></i></button>
@@ -50,15 +50,12 @@
                     </div>
                     <div class="user-info">
                         <div class="user-avatar">
-                            <a href="${contextPath!}/user/$!{new.user.id}/"><img width="32" class="img-circle" src="${contextPath}/${new.user.headUrl}"></a>
+                            <a href="${contextPath!}/user/${new.user.id}/"><img width="32" class="img-circle" src="${contextPath}/${new.user.headUrl}"></a>
                         </div>
-
-
                     </div>
 
                     <div class="subject-name">来自 <a href="${contextPath!}/user/${new.user.id}/">${new.user.username}</a></div>
                 </div>
-
 
               <#if new_index == news?size >
                  </div>  <#--最后有个元素要收尾 -->
