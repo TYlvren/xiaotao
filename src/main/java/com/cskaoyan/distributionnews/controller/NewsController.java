@@ -30,11 +30,21 @@ public class NewsController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("news/{id}")
-    public String toDetail(@PathVariable int id, Model model) {
-        New news = newService.findNews(id);
-        model.addAttribute("news", news);
+    public String toDetail(@PathVariable int id, Model model,HttpSession session) {
         List<Comment> comments = newService.findComment(id);
         model.addAttribute("comments", comments);
+
+        Object attribute = session.getAttribute("user");
+        if(attribute == null){
+            New aNew = newService.findNew(id);
+            model.addAttribute("news", aNew);
+            return "detail";
+        }
+
+        User user = (User)session.getAttribute("user");
+        String userIdString = String.valueOf(user.getId());
+        New news = newService.findNew(id,userIdString);
+        model.addAttribute("news", news);
         return "detail";
     }
 

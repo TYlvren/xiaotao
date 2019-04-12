@@ -64,8 +64,36 @@ public class NewServiceImpl implements NewService {
      * @return
      */
     @Override
-    public New findNews(int id) {
+    public New findNew(int id) {
         return newDao.selectNewById(id);
+    }
+
+
+    /**
+     * 通过id查找new,并查找user是否为new点赞
+     * @param id
+     * @return
+     */
+    @Override
+    public New findNew(int id,String userIdString) {
+        New news = newDao.selectNewById(id);
+        setNewsLike(userIdString, news);
+        return news;
+    }
+
+    private void setNewsLike(String userIdString, New news) {
+        int newId = news.getId();
+        //查看该新闻是否被当前用户点赞
+        Boolean sismember = jedis.sismember(newId + "_like", userIdString);
+        //如果被点赞则like为1
+        if (sismember) {
+            news.setLike(1);
+        }
+        //查看该新闻是否被当前用户点踩
+        sismember = jedis.sismember(newId + "_dislike", userIdString);
+        if (sismember) {
+            news.setLike(-1);
+        }
     }
 
     /**
@@ -190,5 +218,22 @@ public class NewServiceImpl implements NewService {
     @Override
     public List<New> findNewsByUserId(int userId) {
         return newDao.selectNewsByUserId(userId);
+    }
+
+
+    /**
+     * 查找Redis判断用户是否为新闻点赞来更新new的like并返回
+     *
+     * @param userIdString
+     * @return
+     */
+    @Override
+    public List<New> findNews(String userIdString) {
+        List<New> news = newDao.selectAllNew();
+        for (New aNew : news) {
+            setNewsLike(userIdString, aNew);
+        }
+
+        return news;
     }
 }

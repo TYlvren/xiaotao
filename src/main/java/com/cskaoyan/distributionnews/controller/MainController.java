@@ -47,31 +47,17 @@ public class MainController {
      */
     @RequestMapping("/")
     public String toHeadPage(Model model,HttpSession session) {
-        List<New> news = newService.findNews();
         Object attribute = session.getAttribute("user");
         if(attribute == null){
+            List<New> news = newService.findNews();
             model.addAttribute("news", news);
             return "home";
         }
+
         User user = (User)attribute;
         String userIdString = String.valueOf(user.getId());
 
-        for (New aNew : news) {
-            int newId = aNew.getId();
-
-            //查看该新闻是否被当前用户点赞
-            Boolean sismember = jedis.sismember(newId + "_like", userIdString);
-            //如果被点赞则like为1
-            if(sismember){
-                aNew.setLike(1);
-            }
-            //查看该新闻是否被当前用户点踩
-            sismember = jedis.sismember(newId + "_dislike", userIdString);
-            if(sismember){
-                aNew.setLike(-1);
-            }
-
-        }
+        List<New> news = newService.findNews(userIdString);
         model.addAttribute("news", news);
         return "home";
     }
@@ -132,5 +118,4 @@ public class MainController {
     public StatusBean upaloadAliyun(MultipartFile file) throws IOException {
         return uploadService.uploadFileToAliyun(file);
     }
-
 }

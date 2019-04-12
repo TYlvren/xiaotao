@@ -48,7 +48,7 @@
         });
     }
 
-    function fClickLike(oEvent) {
+    /*function fClickLike(oEvent) {
         var that = this;
         var oEl = $(oEvent.currentTarget);
         var sId = $.trim(oEl.attr('data-id'));
@@ -71,9 +71,9 @@
                 that.actioning = false;
             }
         });
-    }
+    }*/
 
-    function fClickDisLike(oEvent) {
+/*    function fClickDisLike(oEvent) {
         var that = this;
         var oEl = $(oEvent.currentTarget);
         var sId = $.trim(oEl.attr('data-id'));
@@ -97,6 +97,6 @@
                 that.actioning = false;
             }
         });
-    }
+    }*/
 
 })(window);

@@ -22,12 +22,22 @@ public interface NewService {
      */
     List<New> findNews();
 
+
+
     /**
      * 通过id查找new
+     *
      * @param id
      * @return
      */
-    New findNews(int id);
+    New findNew(int id);
+
+    /**
+     * 通过id查找new,并查找user是否为new点赞
+     * @param id
+     * @return
+     */
+    New findNew(int id,String userIdString);
 
     /**
      * 为news添加一条评论
@@ -73,4 +83,11 @@ public interface NewService {
      * @return
      */
     List<New> findNewsByUserId(int userId);
+
+    /**
+     * 查找Redis判断用户是否为新闻点赞来更新new的like并返回
+     * @param userIdString
+     * @return
+     */
+    List<New> findNews(String userIdString);
 }
