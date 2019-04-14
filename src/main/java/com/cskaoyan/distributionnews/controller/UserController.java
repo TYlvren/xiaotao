@@ -47,10 +47,10 @@ public class UserController {
      */
     @RequestMapping("msg/addMessage")
     @ResponseBody
-    public StatusBean addMessage(Message message,HttpSession session){
+    public StatusBean addMessage(Message message,String toName,HttpSession session){
         User user = (User)session.getAttribute("user");
-        message.setFromName(user.getUsername());
-        return messageService.addMessage(message);
+        message.setFromId(user.getId());
+        return messageService.addMessage(message,toName);
     }
 
     /**

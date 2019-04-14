@@ -6239,7 +6239,7 @@ header.navbar .navbar-toggle .icon-bar {
   height: 50px;
   margin-left: 30px;
   padding: 5px 0 0 55px;
-  background: url(/assets/logo-blue-67e531bf6ddf8780eeaa252f03bebfeb.png) no-repeat left center;
+  /*background: url(/assets/logo-blue-67e531bf6ddf8780eeaa252f03bebfeb.png) no-repeat left center;*/
   background-size: 46px 46px;
   text-decoration: none;
   color: #666;

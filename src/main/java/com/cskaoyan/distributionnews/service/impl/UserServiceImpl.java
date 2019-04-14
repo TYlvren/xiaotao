@@ -4,10 +4,12 @@ import com.cskaoyan.distributionnews.bean.StatusBeanUser;
 import com.cskaoyan.distributionnews.dao.UserDao;
 import com.cskaoyan.distributionnews.model.User;
 import com.cskaoyan.distributionnews.service.UserService;
+import com.cskaoyan.distributionnews.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,8 +34,18 @@ public class UserServiceImpl implements UserService {
             statusBeanUser.setMsgname("用户名已被注册");
             return statusBeanUser;
         }
-        int random = (int) (Math.random() * 10 + 1);
-        user.setHeadUrl("images/headImg/"+ random +".jpg");
+        Random random = new Random();
+        int ran = random.nextInt(10) + 1;
+        user.setHeadUrl("images/headImg/"+ ran +".jpg");
+
+        //获取密码的md5，盐值为随机数
+        int nextInt = random.nextInt(100);
+        String md5 = MD5Utils.getMD5(user.getPassword(), nextInt);
+
+        //设置盐值和密码
+        user.setSalt(Integer.toHexString(nextInt));
+        user.setPassword(md5);
+
         int i = userDao.insertUser(user);
         if(i != 1){
             statusBeanUser.setCode(2);
@@ -56,14 +68,23 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusBeanUser loginUser(User user, HttpSession session) {
-        User userByUsername = userDao.selectUserByUsername(user.getUsername());
+        String username = user.getUsername();
+        User userByUsername = userDao.selectUserByUsername(username);
         if(userByUsername == null){
             statusBeanUser.setCode(1);
             statusBeanUser.setMsgname("用户名不存在");
             return statusBeanUser;
         }
 
-        User userByUsernameAndPassword = userDao.selectUserByUsernameAndPassword(user.getUsername(), user.getPassword());
+        //查询salt值
+        String salt = userDao.selectSaltByUsername(username);
+        Integer value = Integer.valueOf(salt, 16);
+
+        //获取md5HashCode
+        String password = user.getPassword();
+        String md5 = MD5Utils.getMD5(password, value);
+
+        User userByUsernameAndPassword = userDao.selectUserByUsernameAndPassword(username,md5);
         if (userByUsernameAndPassword == null){
             statusBeanUser.setCode(2);
             statusBeanUser.setMsgname("密码错误");

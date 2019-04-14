@@ -12,7 +12,7 @@
                             删除
                             </a>
                             <a href="${contextPath}/msg/detail?conversationId=${conversation.conversationId!}">
-                                共${conversation.id!}条会话
+                                共${conversation.messageNum!}条会话
                             </a>
                         </div>
                     </div>
@@ -21,12 +21,12 @@
                             ${conversation.unread!}
                         </span>
                         <a class="list-head" href="${contextPath}/user/${conversation.user.id!}">
-                            <img alt="头像" src="${conversation.user.headUrl!}">
+                            <img alt="头像" src="${contextPath}/${conversation.user.headUrl!}">
                         </a>
                     </div>
                     <div class="letter-detail">
-                        <a title="${conversation.user.name!}" class="letter-name level-color-1">
-                            ${conversation.user.name!}
+                        <a title="${conversation.user.username!}" class="letter-name level-color-1">
+                            ${conversation.user.username!}
                         </a>
                         <p class="letter-brief">
                             <a href="${contextPath}/msg/detail?conversationId=${conversation.conversationId!}">

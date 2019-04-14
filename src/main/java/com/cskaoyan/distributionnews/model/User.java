@@ -11,6 +11,7 @@ public class User {
     private String password;
     private String headUrl;
 
+    private String salt;
     public User() {
     }
 
@@ -51,5 +52,13 @@ public class User {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

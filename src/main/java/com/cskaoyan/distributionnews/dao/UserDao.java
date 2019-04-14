@@ -36,4 +36,7 @@ public interface UserDao {
     int insertUser(User user);
 
 
+    String selectSaltByUsername(String username);
+
+    int selectUserIdByUsername(String username);
 }

@@ -4,7 +4,7 @@
 <mapper namespace="com.cskaoyan.distributionnews.dao.UserDao">
     <sql id="table">user</sql>
     <sql id="userColumns">
-    id,username,password,head_url as headUrl
+    id,username,password,head_url as headUrl,salt
     </sql>
 
     <select id="selectUserByUsername" resultType="user">
@@ -17,6 +17,13 @@
                 username = #{username}
             </if>
         </where>
+    </select>
+
+    <select id="selectSaltByUsername" resultType="string">
+        select salt
+        from
+        <include refid="table"/>
+        where username = #{username}
     </select>
 
     <select id="selectUserByUsernameAndPassword" resultType="user">
@@ -33,7 +40,14 @@
         FROM
         <include refid="table"/>
         WHERE id =#{id}
+    </select>
 
+
+    <select id="selectUserIdByUsername" resultType="_int">
+        SELECT id
+        FROM
+        <include refid="table"/>
+        WHERE username =#{username}
     </select>
 
     <insert id="insertUser">
@@ -42,8 +56,8 @@
         </selectKey>
         insert into
         <include refid="table"/>
-         (id,username,password,head_url)
-         values (#{id},#{username},#{password},#{headUrl});
+         (id,username,password,head_url,salt)
+         values (#{id},#{username},#{password},#{headUrl},#{salt});
     </insert>
 
 </mapper>

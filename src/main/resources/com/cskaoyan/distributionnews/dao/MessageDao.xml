@@ -5,21 +5,63 @@
 
     <sql id="table">message</sql>
     <sql id="messageColumns">
-        id,from_name,to_name,content,created_date
+        id,from_id,to_id,content,created_date,conversation_id,has_read
     </sql>
 
     <insert id="insertMessage">
       insert into
       <include refid="table"/>
       (<include refid="messageColumns"/>)
-      value (#{id},#{fromName},#{toName},#{content},now())
+      value (#{id},#{fromId},#{toId},#{content},now(),#{conversationId},#{hasRead})
     </insert>
 
-    <select id="selectMessageByFromName" resultType="message">
+    <select id="selectMessageByFromId" resultType="message">
         select
-        id,from_name as fromName,to_name as toName,content,created_date ad createdDate
+        id,from_id as fromId,to_id as toId,content,created_date as createdDate,
+        conversation_id as conversationId,has_read as hasRead
         from
         <include refid="table"/>
-        where from_name = #{fromName}
+        where from_id = #{fromId}
     </select>
+
+    <select id="selectMessageByToId" resultType="message">
+        select
+        id,from_id as fromId,to_id as toId,content,created_date as createdDate,
+        conversation_id as conversationId,has_read as hasRead
+        from
+        <include refid="table"/>
+        where to_id = #{toId}
+    </select>
+
+
+    <resultMap id="messageMap" type="message">
+        <id property="id" column="id"/>
+        <result property="fromId" column="from_id"/>
+        <result property="toId" column="to_id"/>
+        <result property="content" column="content"/>
+        <result property="createdDate" column="created_date"/>
+        <result property="conversationId" column="conversation_id"/>
+        <result property="hasRead" column="has_read"/>
+        <association property="user" column="from_id" javaType="user"
+                     select="com.cskaoyan.distributionnews.dao.UserDao.selectUserById"/>
+    </resultMap>
+    <select id="selectMessageByConversationId" resultMap="messageMap">
+        select
+        id,from_id,to_id,content,created_date,
+        conversation_id,has_read
+        from
+        <include refid="table"/>
+        where conversation_id = #{conversationId}
+    </select>
+
+    <update id="setHasRead">
+        update
+        <include refid="table"/>
+        set has_read=1
+        <where>
+            <foreach collection="list" item="id">
+                or id=#{id}
+            </foreach>
+        </where>
+    </update>
 </mapper>

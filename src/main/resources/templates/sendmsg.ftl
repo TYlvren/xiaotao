@@ -34,8 +34,7 @@
                                         <div class="zm-editable-editor-outer">
                                             <div class="zm-editable-editor-field-wrap">
                                                 <div id="mock:k" class="zm-editable-editor-field-element editable" g_editable="true" role="textbox" contenteditable="true" style="font-style: italic;">
-                                                    <p>
-                                                        <span id="msg_content" style="font-style: normal;color: #999;" aria-placeholder="私信内容x"></span></p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -59,10 +58,8 @@
 
         var elementById = document.getElementById("msg_to");
         var to=elementById.value;
-        var elementById2 = document.getElementById("msg_content");
+        var elementById2 = document.getElementById("mock:k");
         var content=elementById2.innerText;
-        //alert(content)
-
         var  errtag =document.getElementById("zh-question-form-tag-err");
 
         // contentType:"application/text;charset=utf-8",
@@ -74,8 +71,8 @@
                 success:function(data){
                     //alert(data)
                     var dataobj = eval('(' + data + ')');
-                    alert(dataobj.code);
-                    alert(dataobj.msg);
+                    //alert(dataobj.code)
+                    //alert(dataobj.msg)
 
                     if (dataobj.code == '1') {
                         errtag.innerText=dataobj.msg
@@ -87,8 +84,6 @@
                 fail:function () {
                     alert('出现错误，请重试');
                 }
-
-
             }
         );
 

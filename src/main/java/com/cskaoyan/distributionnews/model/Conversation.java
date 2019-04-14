@@ -4,12 +4,20 @@ import java.util.Date;
 
 public class Conversation {
 
-    String conversationId;
-    Conversation conversation;
-    User user = new User();
-    int id;
-    String content;
-    Date createdDate = new Date(System.currentTimeMillis());
+    private String conversationId;
+    private User user = new User();
+    private String content;
+    private Date createdDate;
+    private int unread;
+    private int messageNum;
+
+    public int getMessageNum() {
+        return messageNum;
+    }
+
+    public void setMessageNum(int messageNum) {
+        this.messageNum = messageNum;
+    }
 
     public String getConversationId() {
         return conversationId;
@@ -19,12 +27,13 @@ public class Conversation {
         this.conversationId = conversationId;
     }
 
-    public Conversation getConversation() {
-        return conversation;
+    public Conversation() {
     }
 
-    public void setConversation(Conversation conversation) {
-        this.conversation = conversation;
+    public Conversation(String conversationId, int fromId,String content) {
+        this.conversationId = conversationId;
+        this.content = content;
+        user.setId(fromId);
     }
 
     public User getUser() {
@@ -35,12 +44,12 @@ public class Conversation {
         this.user = user;
     }
 
-    public int getId() {
-        return id;
+    public int getUnread() {
+        return unread;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUnread(int unread) {
+        this.unread = unread;
     }
 
     public String getContent() {
