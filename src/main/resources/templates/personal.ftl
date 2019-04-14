@@ -1,7 +1,7 @@
 <#include "header.ftl">
 <div id="main">
     <div class="container">
-        头像: <img alt="头像" src="${contextPath}/${user.headUrl!}" width="100px" height="100px"/><br>
+        头像: <img alt="头像" src="${user.headUrl!}"/><br>
         用户名: ${user.username!} <br>
 
         <!--<ul>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="user-info">
                         <div class="user-avatar">
-                            <a href="${contextPath!}/user/${new.user.id}/"><img width="32" class="img-circle" src="${contextPath}/${new.user.headUrl}"></a>
+                            <a href="${contextPath!}/user/${new.user.id}/"><img width="32" class="img-circle" src="${new.user.headUrl}"></a>
                         </div>
 
 

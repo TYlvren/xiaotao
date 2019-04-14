@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         }
         Random random = new Random();
         int ran = random.nextInt(10) + 1;
-        user.setHeadUrl("images/headImg/"+ ran +".jpg");
+        user.setHeadUrl("https://distributionnews.oss-cn-hangzhou.aliyuncs.com/headImg/"+ ran +".jpg?x-oss-process=image/resize,w_60,h_50");
 
         //获取密码的md5，盐值为随机数
         int nextInt = random.nextInt(100);

@@ -74,9 +74,7 @@ public class NewsController {
             statusBean.setMsg("无效");
             return statusBean;
         }
-
         return newService.increaseLikeCount(newsId, user.getId());
-
     }
 
     /**
@@ -96,13 +94,6 @@ public class NewsController {
             statusBean.setMsg("无效");
             return statusBean;
         }
-
-        int msg = newService.findLikeCount(newsId);
-        if (msg == 0) {
-            statusBean.setMsg("0");
-            return statusBean;
-        }
-
         return newService.decreaseLikeCount(newsId, user.getId());
     }
 }

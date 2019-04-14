@@ -34,7 +34,7 @@
             </div>
             <div class="user-info">
                 <div class="user-avatar">
-                    <a href="${contextPath}/user/${news.user.id!}"><img width="32" class="img-circle" src="${contextPath}/${news.user.headUrl!}"></a>
+                    <a href="${contextPath}/user/${news.user.id!}"><img width="32" class="img-circle" src="${news.user.headUrl!}"></a>
                 </div>
                 <!--
                 <div class="info">
@@ -78,7 +78,7 @@
             <#list  comments as comment >
             <div class="media">
                 <a class="media-left" href="${contextPath}/user/${comment.user.id!}">
-                    <img src="${contextPath}/${comment.user.headUrl!}">
+                    <img src="${comment.user.headUrl!}">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">

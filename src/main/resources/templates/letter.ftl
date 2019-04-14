@@ -21,7 +21,7 @@
                             ${conversation.unread!}
                         </span>
                         <a class="list-head" href="${contextPath}/user/${conversation.user.id!}">
-                            <img alt="头像" src="${contextPath}/${conversation.user.headUrl!}">
+                            <img alt="头像" src="${conversation.user.headUrl!}">
                         </a>
                     </div>
                     <div class="letter-detail">
