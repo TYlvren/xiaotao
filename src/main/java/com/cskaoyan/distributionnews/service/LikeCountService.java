@@ -1,24 +1,38 @@
 package com.cskaoyan.distributionnews.service;
 
+import com.cskaoyan.distributionnews.asyncevent.Event;
 import com.cskaoyan.distributionnews.bean.StatusBean;
 
 public interface LikeCountService {
 
     /**
-     * 增加新闻点赞数
-     * @param newsId
-     * @param userId
+     * 增加Mysql新闻点赞数
+     * @param event
      * @return
      */
-    StatusBean increaseLikeCount(int newsId, int userId);
-
+    void increaseLikeCount(Event event);
 
     /**
-     * 减少新闻点赞数
-     *
+     * 添加用户like news至Redis
      * @param newsId
      * @param userId
      * @return
      */
-    StatusBean decreaseLikeCount(int newsId, int userId);
+    StatusBean addLikeToRedis(int newsId, int userId);
+
+    /**
+     * 减少MySql新闻点赞数
+     *
+     * @param event
+     * @return
+     */
+    void decreaseLikeCount(Event event);
+
+    /**
+     * 添加用户dislike news至Redis
+     * @param newsId
+     * @param userId
+     * @return
+     */
+    StatusBean addDislikeToRedis(int newsId, int userId);
 }

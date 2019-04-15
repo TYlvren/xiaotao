@@ -13,11 +13,15 @@ import java.util.*;
 @Service
 public class ConversationServiceImpl implements ConversationService {
 
-    @Autowired
-    private ConversationDao conversationDao;
+    private final ConversationDao conversationDao;
+
+    private final MessageDao messageDao;
 
     @Autowired
-    private MessageDao messageDao;
+    public ConversationServiceImpl(ConversationDao conversationDao, MessageDao messageDao) {
+        this.conversationDao = conversationDao;
+        this.messageDao = messageDao;
+    }
 
 
     @Override

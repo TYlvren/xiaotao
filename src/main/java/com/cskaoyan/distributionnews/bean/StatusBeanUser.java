@@ -27,4 +27,9 @@ public class StatusBeanUser {
     public void setMsgname(String msgname) {
         this.msgname = msgname;
     }
+
+    public void setCodeAndeMsgname(int code, String msgname){
+        this.code = code;
+        this.msgname = msgname;
+    }
 }

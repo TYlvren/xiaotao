@@ -1,5 +1,8 @@
 package com.cskaoyan.distributionnews.controller;
 
+import com.cskaoyan.distributionnews.asyncevent.EventProducer;
+import com.cskaoyan.distributionnews.asyncevent.enumeration.EventType;
+import com.cskaoyan.distributionnews.asyncevent.enumeration.TargetType;
 import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.model.User;
 import com.cskaoyan.distributionnews.service.LikeCountService;
@@ -7,17 +10,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class LikeController {
 
-    @Autowired
-    private LikeCountService likeCountService;
+    private final LikeCountService likeCountService;
+
+    private final StatusBean statusBean;
 
     @Autowired
-    private StatusBean statusBean;
+    public LikeController(LikeCountService likeCountService, StatusBean statusBean, Jedis jedis) {
+        this.likeCountService = likeCountService;
+        this.statusBean = statusBean;
+        this.jedis = jedis;
+    }
+
+    private final Jedis jedis;
 
     /**
      * 点赞
@@ -36,7 +47,13 @@ public class LikeController {
             statusBean.setMsg("无效");
             return statusBean;
         }
-        return likeCountService.increaseLikeCount(newsId, user.getId());
+
+        //生产一个类型为Like的事件
+        EventProducer.createEvent(jedis,EventType.LIKE,user.getId(),
+                newsId, TargetType.News,null);
+
+
+        return likeCountService.addLikeToRedis(newsId, user.getId());
     }
 
     /**
@@ -56,6 +73,11 @@ public class LikeController {
             statusBean.setMsg("无效");
             return statusBean;
         }
-        return likeCountService.decreaseLikeCount(newsId, user.getId());
+
+        //生产一个类型为Dislike的事件
+        EventProducer.createEvent(jedis,EventType.DISLIKE,user.getId(),
+                newsId, TargetType.News,null);
+
+        return likeCountService.addDislikeToRedis(newsId, user.getId());
     }
 }

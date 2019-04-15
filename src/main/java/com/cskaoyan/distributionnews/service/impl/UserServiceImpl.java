@@ -13,11 +13,15 @@ import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    private final StatusBeanUser statusBeanUser;
 
     @Autowired
-    private StatusBeanUser statusBeanUser;
+    public UserServiceImpl(UserDao userDao, StatusBeanUser statusBeanUser) {
+        this.userDao = userDao;
+        this.statusBeanUser = statusBeanUser;
+    }
 
     /**
      * 注册用户
@@ -30,10 +34,11 @@ public class UserServiceImpl implements UserService {
         User userByUsername = userDao.selectUserByUsername(user.getUsername());
 
         if(userByUsername != null){
-            statusBeanUser.setCode(1);
-            statusBeanUser.setMsgname("用户名已被注册");
+            statusBeanUser.setCodeAndeMsgname(1,"用户名已被注册");
             return statusBeanUser;
         }
+
+        //随机获取一张存放在阿里云上的照片作为用户的头像
         Random random = new Random();
         int ran = random.nextInt(10) + 1;
         user.setHeadUrl("https://distributionnews.oss-cn-hangzhou.aliyuncs.com/headImg/"+ ran +".jpg?x-oss-process=image/resize,w_60,h_50");
@@ -48,13 +53,11 @@ public class UserServiceImpl implements UserService {
 
         int i = userDao.insertUser(user);
         if(i != 1){
-            statusBeanUser.setCode(2);
-            statusBeanUser.setMsgname("注册异常");
+            statusBeanUser.setCodeAndeMsgname(2,"注册异常");
             return statusBeanUser;
         }
 
-        statusBeanUser.setCode(0);
-        statusBeanUser.setMsgname("注册成功");
+        statusBeanUser.setCodeAndeMsgname(0,"注册成功");
         session.setAttribute("user",user);
         return statusBeanUser;
     }
@@ -71,8 +74,7 @@ public class UserServiceImpl implements UserService {
         String username = user.getUsername();
         User userByUsername = userDao.selectUserByUsername(username);
         if(userByUsername == null){
-            statusBeanUser.setCode(1);
-            statusBeanUser.setMsgname("用户名不存在");
+            statusBeanUser.setCodeAndeMsgname(1,"用户名不存在");
             return statusBeanUser;
         }
 
@@ -86,14 +88,13 @@ public class UserServiceImpl implements UserService {
 
         User userByUsernameAndPassword = userDao.selectUserByUsernameAndPassword(username,md5);
         if (userByUsernameAndPassword == null){
-            statusBeanUser.setCode(2);
-            statusBeanUser.setMsgname("密码错误");
+            statusBeanUser.setCodeAndeMsgname(2,"密码错误");
             return statusBeanUser;
         }
 
         session.setAttribute("user",userByUsernameAndPassword);
-        statusBeanUser.setCode(0);
-        statusBeanUser.setMsgname("登录成功");
+
+        statusBeanUser.setCodeAndeMsgname(0,"登录成功");
         return statusBeanUser;
 
     }

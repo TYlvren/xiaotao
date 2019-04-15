@@ -17,17 +17,21 @@ import java.util.List;
 public class NewServiceImpl implements NewService {
 
 
-    @Autowired
-    private NewDao newDao;
+    private final NewDao newDao;
+
+    private final CommentDao commentDao;
+
+    private final Jedis jedis;
+
+    private final StatusBean statusBean;
 
     @Autowired
-    private CommentDao commentDao;
-
-    @Autowired
-    private Jedis jedis;
-
-    @Autowired
-    private StatusBean statusBean;
+    public NewServiceImpl(NewDao newDao, CommentDao commentDao, Jedis jedis, StatusBean statusBean) {
+        this.newDao = newDao;
+        this.commentDao = commentDao;
+        this.jedis = jedis;
+        this.statusBean = statusBean;
+    }
 
     /**
      * 添加news

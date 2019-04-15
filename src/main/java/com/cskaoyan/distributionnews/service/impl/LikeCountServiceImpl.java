@@ -1,5 +1,6 @@
 package com.cskaoyan.distributionnews.service.impl;
 
+import com.cskaoyan.distributionnews.asyncevent.Event;
 import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.dao.NewDao;
 import com.cskaoyan.distributionnews.service.LikeCountService;
@@ -23,16 +24,43 @@ public class LikeCountServiceImpl implements LikeCountService {
         this.statusBean = statusBean;
     }
 
-
     /**
      * 增加新闻点赞数
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public void increaseLikeCount(Event event) {
+        int newsId = event.getTargetId();
+        //增加数据库中news的点赞数
+        int i = newDao.increaseLikeCountById(newsId);
+    }
+
+
+    /**
+     * 减少新闻点赞数
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public void decreaseLikeCount(Event event) {
+        int newsId = event.getTargetId();
+        //数据库中点赞数减1
+        int i = newDao.decreaseLikeCountById(newsId);
+
+    }
+
+    /**
+     * 添加用户like news至Redis
      *
      * @param newsId
      * @param userId
      * @return
      */
     @Override
-    public StatusBean increaseLikeCount(int newsId, int userId) {
+    public StatusBean addLikeToRedis(int newsId, int userId) {
         String userIdString = String.valueOf(userId);
 
         //在Redis中newsId_like set添加此userId
@@ -52,36 +80,30 @@ public class LikeCountServiceImpl implements LikeCountService {
             }
         }
 
-        //增加数据库中news的点赞数
-        int i = newDao.increaseLikeCountById(newsId);
+        //查询Redis中点赞总数
+        Long scard = jedis.scard(newsId + "_like");
 
-        int msg = newDao.selectLikeCountById(newsId);
-        if (i == 1) {
-            statusBean.setCodeAndMsg(0, String.valueOf(msg));
-        } else {
-            statusBean.setCodeAndMsg(1, "异常");
-        }
+        statusBean.setCodeAndMsg(0,String.valueOf(scard));
 
         return statusBean;
     }
 
-
     /**
-     * 减少新闻点赞数
+     * 添加用户dislike news至Redis
      *
      * @param newsId
      * @param userId
      * @return
      */
     @Override
-    public StatusBean decreaseLikeCount(int newsId, int userId) {
+    public StatusBean addDislikeToRedis(int newsId, int userId) {
         String userIdString = String.valueOf(userId);
 
-        //查询数据库当前的点赞数
-        int msg = newDao.selectLikeCountById(newsId);
+        //查询Redis当前的点赞数
+        Long scard = jedis.scard(newsId + "_like");
 
         //点赞数为0时不能点踩
-        if (msg == 0) {
+        if (scard == 0) {
             statusBean.setMsg("0");
             return statusBean;
         }
@@ -89,7 +111,7 @@ public class LikeCountServiceImpl implements LikeCountService {
         //如果没有点赞则不能点踩
         Boolean sismember = jedis.sismember(newsId + "_like", userIdString);
         if (!sismember) {
-            statusBean.setCodeAndMsg(0, String.valueOf(msg));
+            statusBean.setCodeAndMsg(0, String.valueOf(scard));
             return statusBean;
         }
 
@@ -107,13 +129,8 @@ public class LikeCountServiceImpl implements LikeCountService {
             return statusBean;
         }
 
-        //数据库中点赞数减1
-        int i = newDao.decreaseLikeCountById(newsId);
-        if (i == 1) {
-            statusBean.setCodeAndMsg(0, String.valueOf(msg - 1));
-        } else {
-            statusBean.setCodeAndMsg(1, "异常");
-        }
+        scard = jedis.scard(newsId + "_like");
+        statusBean.setCodeAndMsg(0,String.valueOf(scard));
         return statusBean;
     }
 }

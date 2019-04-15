@@ -15,8 +15,12 @@ import java.util.UUID;
 @Service
 public class UploadServiceImpl implements UploadService {
 
+    private final StatusBean statusBean;
+
     @Autowired
-    private StatusBean statusBean;
+    public UploadServiceImpl(StatusBean statusBean) {
+        this.statusBean = statusBean;
+    }
 
     /**
      * 上传图片到阿里云OSS
