@@ -22,14 +22,18 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final NewService newService;
+
+    private final MessageService messageService;
 
     @Autowired
-    private NewService newService;
-
-    @Autowired
-    private MessageService messageService;
+    public UserController(UserService userService, NewService newService, MessageService messageService) {
+        this.userService = userService;
+        this.newService = newService;
+        this.messageService = messageService;
+    }
 
     /**
      * 跳转到发私信页面

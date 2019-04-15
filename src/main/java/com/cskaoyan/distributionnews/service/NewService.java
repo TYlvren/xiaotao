@@ -53,24 +53,6 @@ public interface NewService {
     List<Comment> findComment(int id);
 
     /**
-     * 增加新闻点赞数
-     * @param newsId
-     * @param userId
-     * @return
-     */
-    StatusBean increaseLikeCount(int newsId, int userId);
-
-
-    /**
-     * 减少新闻点赞数
-     *
-     * @param newsId
-     * @param userId
-     * @return
-     */
-    StatusBean decreaseLikeCount(int newsId, int userId);
-
-    /**
      * 查找新闻点赞数
      * @param newsId
      * @return

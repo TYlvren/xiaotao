@@ -17,11 +17,15 @@ import java.util.List;
 @RequestMapping("msg")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    private final ConversationService conversationService;
 
     @Autowired
-    private ConversationService conversationService;
+    public MessageController(MessageService messageService, ConversationService conversationService) {
+        this.messageService = messageService;
+        this.conversationService = conversationService;
+    }
 
     /**
      * 跳转到站内信页面

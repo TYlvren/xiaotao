@@ -18,17 +18,22 @@ import java.util.List;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    @Autowired
-    private MessageDao messageDao;
+    private final MessageDao messageDao;
+
+    private final UserDao userDao;
+
+    private final StatusBean statusBean;
+
+    private final ConversationDao conversationDao;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private StatusBean statusBean;
-
-    @Autowired
-    private ConversationDao conversationDao;
+    public MessageServiceImpl(MessageDao messageDao, UserDao userDao,
+                              StatusBean statusBean, ConversationDao conversationDao) {
+        this.messageDao = messageDao;
+        this.userDao = userDao;
+        this.statusBean = statusBean;
+        this.conversationDao = conversationDao;
+    }
 
     /**
      * 添加一条新私信
@@ -57,64 +62,31 @@ public class MessageServiceImpl implements MessageService {
         message.setToId(toId);
 
         //设置会话的id
-        boolean isConversationExist = setConversationId(message, fromId, toId);
+        String conversationId = fromId < toId ? (fromId + "_" + toId) : (toId + "_" + fromId);
+        message.setConversationId(conversationId);
 
         //添加message和conversation,开启事务
-        insertMessageAndConversation(message,isConversationExist);
+        insertMessageAndConversation(message);
 
         statusBean.setCodeAndMsg(0,"发送成功");
         return statusBean;
     }
 
-
-    /**
-     * 判断会话是否存在，根据查询结果设置会话id，返回数据库中是否存在该会话
-     * @param message
-     * @param fromId
-     * @param toId
-     * @return
-     */
-    private boolean setConversationId(Message message, int fromId, int toId) {
-        //设置会话id
-        String conversationId = fromId + "_" + toId;
-        //查询该会话是否存在
-        boolean isConversationExist = true;
-        Conversation conversation = conversationDao.selectConversationById(conversationId);
-
-        if(conversation == null) {
-
-            //如果不存在，则查询新增会话的另一个名字
-            String otherConversationId = toId + "_" + fromId;
-            conversation = conversationDao.selectConversationById(otherConversationId);
-
-            if(conversation == null) {
-
-                //会话不存在，设置消息的会话id为conversationId
-                isConversationExist = false;
-                message.setConversationId(conversationId);
-            }else {
-                //该用户为会话的接收者，设置下次的会话id为otherConversationId
-                message.setConversationId(otherConversationId);
-            }
-
-        }else {
-            //会话存在，设置消息的会话id为conversationId
-            message.setConversationId(conversationId);
-        }
-        return isConversationExist;
-    }
-
     @Transactional
-    void insertMessageAndConversation(Message message,boolean isConversationExist) {
+    void insertMessageAndConversation(Message message) {
 
         String conversationId = message.getConversationId();
-        if(isConversationExist){
+        //查询该会话是否存在
+        Conversation conversation = conversationDao.selectConversationById(conversationId);
+
+
+        if(conversation == null) {
+            //会话不存在，新增一个会话
+            conversation = new Conversation(conversationId, message.getFromId(), message.getContent());
+            conversationDao.insertConversation(conversation);
+        }else {
             //如果会话已经存在,则会话的消息数+1
             conversationDao.increaseMessageNum(conversationId);
-        }else {
-            //会话不存在，新增一个会话
-            Conversation conversation = new Conversation(conversationId, message.getFromId(), message.getContent());
-            conversationDao.insertConversation(conversation);
         }
 
         //为会话添加消息,消息标记为未读状态

@@ -1,6 +1,5 @@
 package com.cskaoyan.distributionnews.controller;
 
-import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.model.Comment;
 import com.cskaoyan.distributionnews.model.New;
 import com.cskaoyan.distributionnews.model.User;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,13 +19,14 @@ import java.util.List;
 @Controller
 public class NewsController {
 
-    @Autowired
-    private NewService newService;
-
-    @Autowired
-    private StatusBean statusBean;
+    private final NewService newService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public NewsController(NewService newService) {
+        this.newService = newService;
+    }
 
     @RequestMapping("news/{id}")
     public String toDetail(@PathVariable int id, Model model,HttpSession session) {
@@ -55,45 +54,5 @@ public class NewsController {
         comment.setUser(user);
         newService.addComment(comment);
         return "redirect:news/" + comment.getNewsId();
-    }
-
-    /**
-     * 点赞
-     *
-     * @param newsId
-     * @param session
-     * @return
-     */
-    @RequestMapping("like")
-    @ResponseBody
-    public StatusBean like(int newsId, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        statusBean.setCode(0);
-
-        if (user == null) {
-            statusBean.setMsg("无效");
-            return statusBean;
-        }
-        return newService.increaseLikeCount(newsId, user.getId());
-    }
-
-    /**
-     * 点踩
-     *
-     * @param newsId
-     * @param session
-     * @return
-     */
-    @RequestMapping("dislike")
-    @ResponseBody
-    public StatusBean dislike(int newsId, HttpSession session) {
-        statusBean.setCode(0);
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            statusBean.setMsg("无效");
-            return statusBean;
-        }
-        return newService.decreaseLikeCount(newsId, user.getId());
     }
 }

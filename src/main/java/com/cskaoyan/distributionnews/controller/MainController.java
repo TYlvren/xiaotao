@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -27,18 +26,19 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    @Autowired
-    private NewService newService;
+    private final NewService newService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
 
-    @Autowired
-    private UploadService uploadService;
+    private final UploadService uploadService;
 
     @Autowired
-    private Jedis jedis;
+    public MainController(NewService newService, UserService userService, UploadService uploadService) {
+        this.newService = newService;
+        this.userService = userService;
+        this.uploadService = uploadService;
+    }
 
     /**
      * 访问首页
