@@ -15,7 +15,7 @@
                 <#assign  cur_date =new.createdDate?string("yyyy-MM-dd")/>
             <h3 class="date">
                 <i class="fa icon-calendar"></i>
-                <span>美食资讯 &nbsp; ${new.createdDate?string("yyyy-MM-dd")}</span>
+                <span>物品资讯 &nbsp; ${new.createdDate?string("yyyy-MM-dd")}</span>
             </h3>
             <div class="posts">
             </#if>

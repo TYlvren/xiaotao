@@ -1,0 +1,87 @@
+package com.shanyi.itemsharing.controller;
+
+import com.shanyi.itemsharing.bean.StatusBean;
+import com.shanyi.itemsharing.model.Message;
+import com.shanyi.itemsharing.model.New;
+import com.shanyi.itemsharing.model.User;
+import com.shanyi.itemsharing.service.MessageService;
+import com.shanyi.itemsharing.service.NewService;
+import com.shanyi.itemsharing.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+
+@Controller
+@RequestMapping("user")
+public class UserController {
+
+    private final UserService userService;
+
+    private final NewService newService;
+
+    private final MessageService messageService;
+
+    @Autowired
+    public UserController(UserService userService, NewService newService, MessageService messageService) {
+        this.userService = userService;
+        this.newService = newService;
+        this.messageService = messageService;
+    }
+
+    /**
+     * 跳转到发私信页面
+     * @return
+     */
+    @RequestMapping("tosendmsg")
+    public String toSendMsg(){
+        return "sendmsg";
+    }
+
+    /**
+     * 添加私信记录
+     * @param message
+     * @return
+     */
+    @RequestMapping("msg/addMessage")
+    @ResponseBody
+    public StatusBean addMessage(Message message,String toName,HttpSession session){
+        User user = (User)session.getAttribute("user");
+        message.setFromId(user.getId());
+        return messageService.addMessage(message,toName);
+    }
+
+    /**
+     * 查看个人信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("{id}")
+    public String userMessage(@PathVariable int id, Model model){
+        User user = userService.findUser(id);
+        model.addAttribute("user",user);
+        List<New> news = newService.findNewsByUserId(id);
+        model.addAttribute("news", news);
+        return "personal";
+    }
+
+
+    /**
+     * 用户添加news
+     * @param news
+     * @return
+     */
+    @RequestMapping("addNews")
+    @ResponseBody
+    public StatusBean addNews(New news, HttpSession session){
+        User user = (User)session.getAttribute("user");
+        news.setUser(user);
+        return newService.addNews(news);
+    }
+}

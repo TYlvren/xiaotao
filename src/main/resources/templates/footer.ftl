@@ -2,9 +2,9 @@
     <div class="container">
         <p class="text-center">
             <a href="http://cskaoyan.com/about">关于我们</a>
-            <a href="http://cskaoyan.com/download">美食资讯客户端</a>
+            <a href="http://cskaoyan.com/download">闲置物品资讯客户端</a>
         </p>
-        <p class="text-center">© 2013-2016 美食八卦</p>
+        <p class="text-center">© 2013-2016 物品八卦</p>
     </div>
 
 </footer>
@@ -13,9 +13,9 @@
     <button type="button" class="close-link btn-link" data-toggle="modal" data-target="#quick-download-app-modal"><i class="fa icon-times-circle"></i></button>
 
     <a class="download-link" href="http://cskaoyan.com/download">
-        <h3>王道吃货网</h3>
-        <h4>程序员的首选美食分享平台</h4>
-        <button type="button" class="btn btn-info btn-sm">下载 APP</button>
+        <h3>校园闲置物品分享网</h3>
+        <h4>校园内的闲置物品分享首选平台</h4>
+        <button type="button" class="btn btn-info btn-sm">下载闲置物品资讯APP</button>
     </a>
 
     <div class="modal fade" id="quick-download-app-modal" tabindex="-1" role="dialog">

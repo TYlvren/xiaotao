@@ -70,12 +70,12 @@
                 data: 'toName='+to+'&&content='+content ,
                 success:function(data){
                     //alert(data)
-                    var dataobj = eval('(' + data + ')');
+                    //var dataobj = eval('(' + data + ')');
                     //alert(dataobj.code)
                     //alert(dataobj.msg)
 
-                    if (dataobj.code == '1') {
-                        errtag.innerText=dataobj.msg
+                    if (data.code == '1') {
+                        errtag.innerText=data.msg
                     } else  {
                         alert("发送成功！")
                         window.location.href = '${contextPath}/msg/list';

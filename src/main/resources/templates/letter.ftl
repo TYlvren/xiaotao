@@ -49,7 +49,7 @@
 
               var options = {
                 "img_url": "",
-                "link": "http://cskaoyan.com/j/wt2rwy",
+                "link": "http://shanyi.com/j/wt2rwy",
                 "desc": "",
                 "title": "读《Web 全栈工程师的自我修养》"
               };
