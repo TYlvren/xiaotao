@@ -20,4 +20,5 @@ public interface NewDao {
     int selectLikeCountById(int newsId);
 
     List<New> selectNewsByUserId(int userId);
+
 }

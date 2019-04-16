@@ -85,6 +85,7 @@ public class LikeCountServiceImpl implements LikeCountService {
 
         statusBean.setCodeAndMsg(0,String.valueOf(scard));
 
+        jedis.close();
         return statusBean;
     }
 
@@ -131,6 +132,7 @@ public class LikeCountServiceImpl implements LikeCountService {
 
         scard = jedis.scard(newsId + "_like");
         statusBean.setCodeAndMsg(0,String.valueOf(scard));
+        jedis.close();
         return statusBean;
     }
 }

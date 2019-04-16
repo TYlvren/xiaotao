@@ -4,7 +4,6 @@ import com.cskaoyan.distributionnews.bean.StatusBean;
 import com.cskaoyan.distributionnews.model.Comment;
 import com.cskaoyan.distributionnews.model.New;
 
-
 import java.util.List;
 
 
@@ -72,4 +71,5 @@ public interface NewService {
      * @return
      */
     List<New> findNews(String userIdString);
+
 }

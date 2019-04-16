@@ -12,7 +12,8 @@ import java.util.Map;
  */
 public class EventProducer {
 
-    public static void createEvent(Jedis jedis,EventType eventType, int activeId, int targetId, TargetType targetType, Map<String,Object> extraData){
+    public static void createEvent(Jedis jedis,EventType eventType, int activeId, int targetId,
+                                   String targetUri,TargetType targetType, Map<String,Object> extraData){
         Event event = new Event();
 
         event.setEVENTTYPE(eventType);
@@ -20,6 +21,7 @@ public class EventProducer {
         event.setTargetId(targetId);
         event.setTargetType(targetType);
         event.setExtraData(extraData);
+        event.setTargetUri(targetUri);
 
         //将事件转换成json字符串存入Redis
         String jsonString = JSONObject.toJSONString(event);

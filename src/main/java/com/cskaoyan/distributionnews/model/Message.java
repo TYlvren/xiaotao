@@ -13,6 +13,15 @@ public class Message {
 
     private User user;
 
+    public Message() {
+    }
+
+    public Message(int fromId, int toId, String content) {
+        this.fromId = fromId;
+        this.toId = toId;
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }

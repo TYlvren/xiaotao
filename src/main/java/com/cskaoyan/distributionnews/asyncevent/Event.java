@@ -22,6 +22,9 @@ public class Event {
     //新闻还是评论
     private TargetType targetType;
 
+    //目标的URI
+    private String targetUri;
+
     //为了以后扩展
     private Map<String,Object> extraData;
 
@@ -66,6 +69,13 @@ public class Event {
         this.extraData = extraData;
     }
 
+    public String getTargetUri() {
+        return targetUri;
+    }
+
+    public void setTargetUri(String targetUri) {
+        this.targetUri = targetUri;
+    }
 
     @Override
     public String toString() {
@@ -74,6 +84,7 @@ public class Event {
                 ", activeId=" + activeId +
                 ", targetId=" + targetId +
                 ", targetType=" + targetType +
+                ", targetUrI='" + targetUri + '\'' +
                 ", extraData=" + extraData +
                 '}';
     }
