@@ -51,6 +51,7 @@ public class MainController {
         if(attribute == null){
             List<New> news = newService.findNews();
             model.addAttribute("news", news);
+            model.addAttribute("pop",0);
             return "home";
         }
 

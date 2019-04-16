@@ -8,10 +8,10 @@
         <version>2.0.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.cskaoyan</groupId>
-    <artifactId>distributionnews</artifactId>
+    <groupId>com.shanyi</groupId>
+    <artifactId>itemsharing</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>distributionnews</name>
+    <name>ItemSharing</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
