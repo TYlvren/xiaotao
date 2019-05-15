@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaotao.share.dao.GoodsDao">
+    <sql id="table">goods_t</sql>
+
+    <resultMap id="goodsMap" type="goods">
+        <id column="id" property="id"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="desc" property="desc"/>
+        <result column="image_url" property="imageUrl"/>
+        <result column="concern_count" property="concernCount"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="expected_price" property="expectedPrice"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="sold" property="sold"/>
+        <association property="user" column="user_id" javaType="user"
+                     select="com.xiaotao.share.dao.UserDao.selectUserById"/>
+    </resultMap>
+    <select id="selectAllGoods" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from goods_t g
+        where
+        sold != 1
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsById" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from
+        goods_t g
+        where id =#{id}
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsByCategoryId" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from
+        goods_t g
+        where category_id =#{cid} and sold != 1
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsByFuzzyName" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from
+        goods_t g
+        where sold != 1 and goods_name like concat('%',#{goodsName},'%')
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsByUserId" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from goods_t g
+        where user_id =#{userId}
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsByUserIdIgnoreSold" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from goods_t g
+        where user_id =#{userId} and sold !=1
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectGoodsByConcern" resultMap="goodsMap">
+        select
+        g.id,goods_name, `desc`, image_url, concern_count,comment_count,
+        expected_price,DATE_FORMAT( created_date, '%Y-%m-%d') as created_date,g.user_id,sold
+        from goods_t g ,concern_t c
+        where c.user_id =#{userId} and c.goods_id = g.id
+        order by created_date desc,concern_count desc , comment_count desc
+    </select>
+
+    <select id="selectLikeCountById" resultType="_int">
+        select
+        concern_count
+        from
+        <include refid="table"/>
+        where id =#{id}
+    </select>
+
+
+    <insert id="insertGoods">
+        <selectKey resultType="_int" keyColumn="id" keyProperty="category.id" order="BEFORE">
+            select
+            id
+            from
+            category_t
+            where category_name=#{category.categoryName}
+        </selectKey>
+        insert into
+        <include refid="table"/>
+        (goods_name, `desc`, image_url,expected_price,created_date,user_id,category_id)
+        value(#{goodsName},#{desc},#{imageUrl},#{expectedPrice},now(),#{user.id},#{category.id})
+    </insert>
+
+    <update id="updateCommentCountById">
+        update
+        <include refid="table"/>
+        set comment_count = comment_count + 1
+        where id=#{id}
+    </update>
+
+    <update id="increaseLikeCountById">
+        update
+        <include refid="table"/>
+        set concern_count = concern_count + 1
+        where id=#{id}
+    </update>
+
+    <update id="decreaseLikeCountById">
+        update
+        <include refid="table"/>
+        set concern_count = concern_count - 1
+        where id=#{id}
+    </update>
+
+    <update id="updateSoldById">
+        update
+        <include refid="table"/>
+        set sold = 1
+        where id=#{goodsId}
+    </update>
+</mapper>

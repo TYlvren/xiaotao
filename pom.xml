@@ -8,14 +8,15 @@
         <version>2.0.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.shanyi</groupId>
-    <artifactId>itemsharing</artifactId>
+    <groupId>com.xiaotao</groupId>
+    <artifactId>share</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ItemSharing</name>
+    <name>share</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <mybatis-plus-boot-starter.version>3.1.0</mybatis-plus-boot-starter.version>
     </properties>
 
 
@@ -24,13 +25,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.0.4.RELEASE</version>
         </dependency>
-        <dependency>
+   <!--     <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.1</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,6 +43,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.11</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!--Redis数据库-->
@@ -84,7 +85,23 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
 
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-boot-starter.version}</version>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+        </dependency>
     </dependencies>
 
     <build>

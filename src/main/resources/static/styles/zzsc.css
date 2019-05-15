@@ -1,0 +1,156 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-size: 12px;
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+/* 本案例代码begin */
+.left_nav {
+    width: auto;
+    height: auto;
+    padding: 5px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin: -170px 0px 0px -650px;
+    z-index: 777;
+    background: #fff;
+    border: 1px solid #CDCDCD;
+}
+
+.left_nav dl dt {
+    width: auto;
+    height: 22px;
+    line-height: 22px;
+    background: url(../images/long.png) no-repeat 12px center #21a88b;
+    padding-left: 35px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.left_nav dl dd {
+    width: 128px;
+    height: 30px;
+    position: relative;
+}
+
+.left_nav dl dd .nav_right {
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    position: absolute;
+    left: 125px;
+    top: 0px;
+    padding: 0px 5px 10px 5px;
+    background: #fff;
+    display: none;
+    border: 1px solid #ccc;
+}
+
+.left_nav dl dd .nav_right a {
+    width: 110px;
+    height: 20px;
+    line-height: 20px;
+    text-align: left;
+    color: #666;
+    padding-left: 40px;
+    background: url(../images/nav_right_bg.png) no-repeat 20px center;
+    display: block;
+    float: left;
+    margin-top: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.left_nav dl dd .nav_right a:hover {
+    width: 110px;
+    height: 20px;
+    line-height: 20px;
+    text-align: left;
+    color: #fff;
+    padding-left: 40px;
+    background: url(../images/nav_right_bg2.png) no-repeat 20px center #21a88b;
+    text-decoration: none;
+}
+
+.left_nav dl dd a.nav_left {
+    width: auto;
+    height: 29px;
+    line-height: 29px;
+    background: url(../images/left_nav_dt_bg.png) no-repeat 105px center #E0E0E0;
+    padding-left: 13px;
+    display: block;
+    border-bottom: 1px solid #fff;
+    color: #3C4347;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.left_nav dl dd a.nav_left:hover {
+    background: url(../images/left_nav_dt_bg2.png) no-repeat 105px center #21a88b;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+/*搜索*/
+#templatemo_search {
+    float: right;
+    margin: 10px 30px 0;
+    width: 220px;
+    height: 34px;
+    background: url(../images/templatemo_search_bg.png)
+}
+
+#templatemo_search form {
+    margin: 0;
+    padding: 0;
+}
+
+#templatemo_search .txt_field {
+    float: left;
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    width: 170px;
+    color: #999;
+    font-size: 12px;
+    padding: 5px;
+    font-variant: normal;
+    border: none;
+    background: none;
+}
+
+#templatemo_search .sub_btn {
+    float: right;
+    display: block;
+    color: #fff;
+    height: 33px;
+    width: 40px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 26px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}

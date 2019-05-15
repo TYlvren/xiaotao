@@ -58,7 +58,7 @@
         }
         that.actioning = true;
         ActionUtil.like({
-            newsId: sId,
+            goodsId: sId,
             call: function (oResult) {
                 oEl.find('span.count').html(oResult.msg);
                 oEl.addClass('pressed');
@@ -83,7 +83,7 @@
         }
         that.actioning = true;
         ActionUtil.dislike({
-            newsId: sId,
+            goodsId: sId,
             call: function (oResult) {
                 oEl.addClass('pressed');
                 var oLikeBtn = oEl.parent().find('.click-like');

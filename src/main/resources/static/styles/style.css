@@ -6537,7 +6537,7 @@ header.navbar .navbar-toggle .icon-bar {
   }
 }
 
-/*赞成and反对*/
+/*关注and取消关注*/
 .votebar {
     float: left;
     margin-right: 18px;
@@ -6708,10 +6708,30 @@ header.navbar .navbar-toggle .icon-bar {
     text-align: center;
     z-index: 10;
 }
+
+.unreadMessage-num {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #e84a4a;
+    color: #FFF;
+    border-radius: 50px;
+    line-height: 16px;
+    min-height: 16px;
+    outline: medium none;
+    padding: 0 4px;
+    text-align: center;
+    z-index: 10;
+}
 .chat-headbox {
     position: relative;
     float: left;
     z-index: 2;
+}
+.messageBox {
+  position: relative;
+  float: left;
+  z-index: 2;
 }
 .list-head {
     display: block;

@@ -17,11 +17,13 @@ var oPopupUpload = new PopupUpload({
                 '<div class="form-group">',
                     '<label class="col-sm-2 control-label">上传图片</label>',
                     '<div class="js-image-container col-sm-10">',
-                        '<a href="javascript:void(0);" class="btn btn-info btn-upload js-upload-btn" style="diplay:inline-block;position:relative;">上传图片</a>',
+                        '<a href="javascript:void(0);" class="btn btn-info btn-upload js-upload-btn" style="display:inline-block;position:relative;">上传图片</a>',
                     '</div>',
                 '</div>',
-                  '<div class="form-group"><label class="col-sm-2 control-label">标题</label><div class="col-sm-10"><input class="js-title form-control" type="text"></div></div>',
-                  '<div class="form-group"><label class="col-sm-2 control-label">链接</label><div class="col-sm-10"><input class="js-link form-control" type="text"></div></div>',
+                  '<div class="form-group"><label class="col-sm-2 control-label">物品名</label><div class="col-sm-10"><input class="js-goodsName form-control" type="text" placeholder="请在20字以内"></div></div>',
+                  '<div class="form-group"><label class="col-sm-2 control-label">描述</label><div class="col-sm-10"><input class="js-desc form-control" type="text" placeholder="请在120字以内"></div></div>',
+                  '<div class="form-group"><label class="col-sm-2 control-label">期望价格</label><div class="col-sm-10"><input class="js-price form-control" type="number"></div></div>',
+                  '<div class="form-group"><label class="col-sm-2 control-label">类别</label><div class="col-sm-10"><input class="js-category form-control" type="text" placeholder="请输入左侧已有分类"></div></div>',
                   '<div class="form-group">',
                         '<div class="col-lg-10 col-lg-offset-2">',
                             '<input type="submit" value="提交" class="js-submit btn btn-default btn-info">',
@@ -58,13 +60,25 @@ var oPopupUpload = new PopupUpload({
             handler: function () {
                 var that = this;
                 var oEl = that.getEl();
-                var sTitle = $.trim(oEl.find('input.js-title').val());
-                var sLink = $.trim(oEl.find('input.js-link').val());
-                if (!sTitle) {
-                    return alert('标题不能为空');
+                var sGoodsName = $.trim(oEl.find('input.js-goodsName').val());
+                var sDesc = $.trim(oEl.find('input.js-desc').val());
+                var sPrice = $.trim(oEl.find('input.js-price').val());
+                var sCategoryName = $.trim(oEl.find('input.js-category').val());
+                if (!sGoodsName) {
+                    return alert('物品名不能为空');
+                }else if(sGoodsName.length > 20){
+                    return alert('物品名请在20字以内');
                 }
-                if (!sLink) {
-                    return alert('链接不能为空');
+                if (!sDesc) {
+                    return alert('描述不能为空');
+                }else if(sDesc.length > 120){
+                    return alert('描述请在120字以内')
+                }
+                if (!sPrice) {
+                    return alert('价格不能为空');
+                }
+                if (!sCategoryName) {
+                    return alert('类别不能为空');
                 }
                 if (!that.image) {
                     return alert('图片不能为空');
@@ -74,9 +88,9 @@ var oPopupUpload = new PopupUpload({
                 }
                 that.requesting = true;
                 $.ajax({
-                    url: '/user/addNews/',
+                    url: '/goods/addGoods/',
                     method: 'post',
-                    data: {image: that.image, title: sTitle, link: sLink},
+                    data: {imageUrl: that.image, goodsName: sGoodsName, desc: sDesc,expectedPrice: sPrice,categoryName:sCategoryName},
                     dataType: 'json'
                 }).done(function (oResult) {
                     that.emit('done');
@@ -118,7 +132,7 @@ var oPopupUpload = new PopupUpload({
             '<div class="letter-pic-box">',
                 '<a href="javascript:void(0);" class="icon-remove-circle"></a>',
                 '<div class="mask"></div>',
-                '<img src="' + sUrl + '">',
+                '<img src="' + sUrl + '" alt="请在5MB以内">',
             '</div>'].join('');
         oEl.find('div.letter-pic-box').remove();
         oEl.find('div.js-image-container').prepend(sHtml);

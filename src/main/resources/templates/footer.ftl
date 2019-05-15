@@ -1,15 +1,15 @@
 <footer>
     <div class="container">
         <p class="text-center">
-            <a href="http://cskaoyan.com/about">关于我们</a>
-            <a href="http://cskaoyan.com/download">闲置物品资讯客户端</a>
+           <#-- <a href="http://cskaoyan.com/about">关于我们</a>
+            <a href="http://cskaoyan.com/download">闲置物品资讯客户端</a>-->
         </p>
-        <p class="text-center">© 2013-2016 物品八卦</p>
+        <#--<p class="text-center">© 2019 山医毕设</p>-->
     </div>
 
 </footer>
 
-<div id="quick-download">
+<#--<div id="quick-download">
     <button type="button" class="close-link btn-link" data-toggle="modal" data-target="#quick-download-app-modal"><i class="fa icon-times-circle"></i></button>
 
     <a class="download-link" href="http://cskaoyan.com/download">
@@ -35,6 +35,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 </body></html>

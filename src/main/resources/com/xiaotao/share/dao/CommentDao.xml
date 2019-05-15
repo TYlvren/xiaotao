@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaotao.share.dao.CommentDao">
+
+    <sql id="table">comment_t</sql>
+    <sql id="commentColumns">
+    id,content,user_id,goods_id,created_date
+    </sql>
+
+    <resultMap id="commentMap" type="comment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="createdDate" column="created_date"/>
+        <association property="user" column="user_id" javaType="user"
+                     select="com.xiaotao.share.dao.UserDao.selectUserById"/>
+    </resultMap>
+    <select id="selectCommentByGoodsId" resultMap="commentMap">
+        select
+        <include refid="commentColumns"/>
+        from
+        <include refid="table"/>
+        where goods_id=#{goodsId}
+        order by created_date desc
+    </select>
+
+    <insert id="insertComment" >
+    insert into
+    <include refid="table"/>
+    (<include refid="commentColumns"/>)
+    value (#{id},#{content},#{user.id},#{goodsId},now())
+    </insert>
+</mapper>

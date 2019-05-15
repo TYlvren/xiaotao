@@ -1,18 +1,43 @@
 server:
+  tomcat:
+    uri-encoding: UTF-8
   servlet:
     context-path: /
   port: 80
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  freemarker:
+    suffix: .ftl   #配置freemarker的视图后缀
+    charset: UTF-8 #配置freemarker的内容编码
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/news?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/xiaotao?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
   servlet:
     multipart:
-      max-file-size: 5Mb
-mybatis:
-  config-location: classpath:mybatis-config.xml
+      max-file-size: 5MB
+
+
+mybatis-plus:
+  mapper-locations: classpath*:com/xiaotao/share/dao/*.xml
+  type-aliases-package: com.xiaotao.share.model
+  global-config:   #全局策略配置
+    db-config:
+      id-type: auto  #全局主键配置0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
+      table-underline: true #默认值是true，实体类驼峰将处理成数据库中的下划线
+  configuration:
+    map-underscore-to-camel-case: false
+    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
 debug: false
 
 # 打印SQL日志
@@ -20,5 +45,5 @@ logging:
   level:
     com:
       cskaoyan:
-        distributionnews:
+        distributiongoods:
           dao: debug

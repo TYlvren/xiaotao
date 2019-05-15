@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaotao.share.dao.UserDao">
+    <sql id="table">user_t</sql>
+    <sql id="userColumns">
+    id,username,password,head_url as headUrl,salt
+    </sql>
+
+    <select id="selectUserByUsername" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSaltByUsername" resultType="string">
+        select salt
+        from
+        <include refid="table"/>
+        where username = #{username}
+    </select>
+
+    <select id="selectUserByUsernameAndPassword" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        WHERE username=#{username} and password=#{password}
+    </select>
+
+    <select id="selectUserById" resultType="user">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        <include refid="table"/>
+        WHERE id =#{id}
+    </select>
+
+
+    <select id="selectUserIdByUsername" resultType="_int">
+        SELECT id
+        FROM
+        <include refid="table"/>
+        WHERE username =#{username}
+    </select>
+
+    <insert id="insertUser">
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="_int">
+            select last_insert_id() as id;
+        </selectKey>
+        insert into
+        <include refid="table"/>
+         (id,username,password,head_url,salt)
+         values (#{id},#{username},#{password},#{headUrl},#{salt});
+    </insert>
+
+</mapper>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>淘客头条 - 淘你想要</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>校淘头条 - 淘你想要</title>
+    <meta name="viewport"
+          content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
 
     <link rel="stylesheet" type="text/css" href="${contextPath}/styles/bootstrap.min.css">
@@ -21,15 +23,20 @@
     <script type="text/javascript" src="${contextPath}/scripts/main/component/popupUpload.js"></script>
     <script type="text/javascript" src="${contextPath}/scripts/main/util/action.js"></script>
     <script type="text/javascript" src="${contextPath}/scripts/main/site/home.js"></script>
-    <script type="text/javascript" src="${contextPath}/scripts/main/component/popupSendMsg.js"></script>
-
+    <style type="text/css">
+        .STYLE22 {
+            font-size: 12px;
+            color: #295568;
+        }
+    </style>
 </head>
 <body class="welcome_index">
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -44,17 +51,29 @@
 
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="font-size: 15px">
                 <#if user??>
-                <li class="js-share"><a href="javascript:void(0);">分享</a></li>
-                <li class=""><a href="${contextPath}/msg/list">站内信</a></li>
-                <li class="top-nav-noti zu-top-nav-li ">
-                    <a href="${contextPath}/user/tosendmsg">   发私信 </a>
-                </li>
-                <li class=""><a href="${contextPath}/user/${user.id!}/">${user.username!}</a></li>
-                <li class=""><a href="${contextPath}/logout/">注销</a></li>
+                    <li class="js-share"><a href="javascript:void(0);">分享</a></li>
+                    <li class="">
+                        <#if unreadMessage gt 0>
+                            <a href="${contextPath}/msg/list">
+                                站内信
+                                <span class="unreadMessage-num" style="color: red">
+                                    ${unreadMessage!}
+                                </span>
+                            </a>
+                        <#else >
+                            <a href="${contextPath}/msg/list">站内信</a>
+                        </#if>
+                    </li>
+                    <li class="top-nav-noti zu-top-nav-li ">
+                        <a href="${contextPath}/user/tosendmsg"> 发私信 </a>
+                    </li>
+                    <li class=""><a href="${contextPath}/user/${user.id!}">${user.username!}</a></li>
+                    <li class=""><a href="${contextPath}/user/myConcern">我的关注</a></li>
+                    <li class=""><a href="${contextPath}/logout">注销</a></li>
                 <#else>
-                <li class="js-login"><a href="javascript:void(0);">登陆</a></li>
+                    <li class="js-login"><a href="javascript:void(0);">登陆</a></li>
                 </#if>
             </ul>
 

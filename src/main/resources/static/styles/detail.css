@@ -6135,26 +6135,26 @@ html.no-touchevents .side-topic-item .delete:hover {
     display:inline-block;
     margin-top:5px
 }
-.topic-pages .related-news,.topic-feed-page .related-news {
+.topic-pages .related-goods,.topic-feed-page .related-goods {
     color:#666
 }
-.topic-pages .related-news .news_source,.topic-feed-page .related-news .news_source {
+.topic-pages .related-goods .goods_source,.topic-feed-page .related-goods .goods_source {
     color:#999;
     text-align:right
 }
-.topic-pages .related-news h3,.topic-feed-page .related-news h3 {
+.topic-pages .related-goods h3,.topic-feed-page .related-goods h3 {
     font-weight:700;
     color:#222
 }
-.topic-pages .related-news li,.topic-feed-page .related-news li {
+.topic-pages .related-goods li,.topic-feed-page .related-goods li {
     list-style:none
 }
-.topic-pages .related-news li+li,.topic-feed-page .related-news li+li {
+.topic-pages .related-goods li+li,.topic-feed-page .related-goods li+li {
     margin-top:5px;
     border-top:1px dotted #EEE;
     padding-top:10px
 }
-.topic-pages .related-news a,.topic-feed-page .related-news a {
+.topic-pages .related-goods a,.topic-feed-page .related-goods a {
     font-weight:700
 }
 .topic-pages .stock-info,.topic-feed-page .stock-info,.topic-pages .company-info,.topic-feed-page .company-info {
