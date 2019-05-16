@@ -1,5 +1,6 @@
 package com.xiaotao.share.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xiaotao.share.bean.StatusBeanUser;
 import com.xiaotao.share.dao.UserDao;
 import com.xiaotao.share.model.User;
@@ -65,20 +66,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusBeanUser loginUser(User user, HttpSession session) {
         String username = user.getUsername();
-        User userByUsername = userDao.selectUserByUsername(username);
+        User userByUsername = userDao.selectOne(new QueryWrapper<User>().eq("username",username));
         if(userByUsername == null){
           return statusBeanUser.setStatusBeanUser(1,"用户名不存在",null);
         }
 
         //查询salt值
-        String salt = userDao.selectSaltByUsername(username);
+        String salt = userDao.select(username);
         Integer value = Integer.valueOf(salt, 16);
 
         //获取md5HashCode
         String password = user.getPassword();
         String md5 = MD5Utils.getMD5(password, value);
 
-        User userByUsernameAndPassword = userDao.selectUserByUsernameAndPassword(username,md5);
+        User userByUsernameAndPassword = userDao.selectOne(new QueryWrapper<User>()
+                .eq("username",username)
+                .eq("password",md5));
         if (userByUsernameAndPassword == null){
             return statusBeanUser.setStatusBeanUser(2,null,"密码错误");
         }
@@ -97,7 +100,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User findUser(int id) {
-        return userDao.selectUserById(id);
+        return userDao.selectById(id);
     }
 
 }

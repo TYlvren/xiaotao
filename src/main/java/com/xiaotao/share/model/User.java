@@ -9,9 +9,9 @@ import javax.validation.constraints.Size;
 @TableName("user_t")
 @Data
 public class User {
-
     private int id;
     @Size(min=2,max = 10,message = "用户名长度应该为2-10位")
+    @TableField("username")
     private String username;
     @Size(min = 6,max = 16,message = "密码长度应为6-16位")
     @TableField("password")

@@ -15,10 +15,10 @@ spring:
     charset: UTF-8 #配置freemarker的内容编码
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xiaotao?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xiaotao?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: 123456
+    password: ying0914..
   servlet:
     multipart:
       max-file-size: 5MB
